@@ -1,0 +1,100 @@
+- alias: Heating Morning On
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.heating_morning_on', 'timestamp') | int | timestamp_custom('%H:%M', false)) }}"
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_on
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.vacation
+    state: 'off'
+  action:
+  - service: script.turn_on_heating
+    data:
+      climate: climate.homekit_radiator_bathroom
+  - service: script.turn_on_heating
+    data:
+      climate: climate.homekit_radiator_living
+  - service: script.turn_on_heating
+    data:
+      climate: climate.homekit_radiator_kitchen
+
+- alias: Heating Downstairs Morning Off
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.heating_morning_off', 'timestamp') | int | timestamp_custom('%H:%M', false)) }}"
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_on
+    state: 'on'
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.staycation
+    state: 'off'
+  action:
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_living
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_kitchen
+
+- alias: Heating Upstairs Morning Off
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.heating_morning_off', 'timestamp') | int | timestamp_custom('%H:%M', false)) }}"
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_on
+    state: 'on'
+  action:
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_bathroom
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_bedroom
+
+- alias: Heating Evening On
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.heating_evening_on', 'timestamp') | int | timestamp_custom('%H:%M', false)) }}"
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_on
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.vacation
+    state: 'off'
+  action:
+  - service: script.turn_on_heating
+    data:
+      climate: climate.homekit_radiator_living
+  - service: script.turn_on_heating
+    data:
+      climate: climate.homekit_radiator_kitchen
+
+- alias: Heating Evening Off
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.heating_evening_off', 'timestamp') | int | timestamp_custom('%H:%M', false)) }}"
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_on
+    state: 'on'
+  action:
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_living
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_kitchen
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_bathroom
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_bedroom

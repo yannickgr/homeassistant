@@ -1,0 +1,28 @@
+- platform: group
+  name: living_wall
+  entities:
+  - light.living_wall_1
+  - light.living_wall_2
+  
+- platform: group
+  name: living_spots
+  entities:
+  - light.living_spot_1
+  - light.living_spot_2
+  
+- platform: group
+  name: bathroom_mirror
+  entities:
+  - light.bathroom_spot_1
+  - light.bathroom_spot_2
+
+- platform: group
+  name: bathroom_spot
+  entities:
+  - light.bathroom_spot_3
+  
+- platform: group
+  name: bedroom_nightstands
+  entities:
+  - light.bedroom_nightstand_1
+  - light.bedroom_nightstand_2

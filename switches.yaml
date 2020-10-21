@@ -1,0 +1,109 @@
+- platform: mqtt
+  name: "bathroom_fan"
+  state_topic: "shellies/shelly1-E098068CE7F5/relay/0" 
+  command_topic: "shellies/shelly1-E098068CE7F5/relay/0/command"
+  payload_on: "on"
+  payload_off: "off"
+  state_on: "on"
+  state_off: "off"
+
+- platform: template
+  switches:
+    heating_living:
+      friendly_name: "Woonkamer"
+      value_template: "{{ (states('sensor.living_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      turn_on:
+        service: script.turn_on_heating
+        data:
+          climate: climate.homekit_radiator_living
+      turn_off:
+        service: script.turn_off_heating
+        data:
+          climate: climate.homekit_radiator_living
+
+    heating_kitchen:
+      friendly_name: "Keuken"
+      value_template: "{{ (states('sensor.kitchen_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      turn_on:
+        service: script.turn_on_heating
+        data:
+          climate: climate.homekit_radiator_kitchen
+      turn_off:
+        service: script.turn_off_heating
+        data:
+          climate: climate.homekit_radiator_kitchen
+
+    heating_bathroom:
+      friendly_name: "Badkamer"
+      value_template: "{{ (states('sensor.bathroom_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      turn_on:
+        service: script.turn_on_heating
+        data:
+          climate: climate.homekit_radiator_bathroom
+      turn_off:
+        service: script.turn_off_heating
+        data:
+          climate: climate.homekit_radiator_bathroom
+
+    heating_bedroom:
+      friendly_name: "Slaapkamer"
+      value_template: "{{ (states('sensor.bedroom_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      turn_on:
+        service: script.turn_on_heating
+        data:
+          climate: climate.homekit_radiator_bedroom
+      turn_off:
+        service: script.turn_off_heating
+        data:
+          climate: climate.homekit_radiator_bedroom
+
+    heating_office:
+      friendly_name: "Kantoor"
+      value_template: "{{ (states('sensor.office_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      turn_on:
+        service: script.turn_on_heating
+        data:
+          climate: climate.homekit_radiator_office
+      turn_off:
+        service: script.turn_off_heating
+        data:
+          climate: climate.homekit_radiator_office
+
+    heating_guestroom:
+      friendly_name: "Gastkamer"
+      value_template: "{{ (states('sensor.guestroom_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      turn_on:
+        service: script.turn_on_heating
+        data:
+          climate: climate.homekit_radiator_guestroom
+      turn_off:
+        service: script.turn_off_heating
+        data:
+          climate: climate.homekit_radiator_guestroom
+
+    heating_storage:
+      friendly_name: "Berging"
+      value_template: "{{ (states('sensor.guestroom_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      turn_on:
+        service: script.turn_on_heating
+        data:
+          climate: climate.homekit_radiator_guestroom
+      turn_off:
+        service: script.turn_off_heating
+        data:
+          climate: climate.homekit_radiator_guestroom
+
+    litterbox_needs_cleaning:
+      friendly_name: "Kattenbak is vuil"
+      value_template: "{{ (states('input_number.litterbox_visits') | int) > (states('input_number.litterbox_visits_max') | int) }}"
+      turn_on:
+        service: script.notify_mobile
+        data:
+          title: "Kattenbak"
+          message: "🐈 De kattenbak is vuil"
+          sound: "meow.wav"
+      turn_off:
+        service: input_number.set_value
+        data:
+          entity_id: input_number.litterbox_visits
+          value: 0

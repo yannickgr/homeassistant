@@ -1,0 +1,15 @@
+default_config:
+frontend: !include frontend.yaml
+automation: !include_dir_merge_list automations/
+scene: !include scenes.yaml
+script: !include scripts.yaml
+group: !include groups.yaml
+light: !include lights.yaml
+switch: !include switches.yaml
+sensor: !include sensors.yaml
+binary_sensor: !include binary_sensors.yaml
+tts: !include tts.yaml
+asuswrt: !include asuswrt.yaml
+webostv: !include webostv.yaml
+google: !include google.yaml
+google_assistant: !include google_home.yaml

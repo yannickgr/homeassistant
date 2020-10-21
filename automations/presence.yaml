@@ -1,0 +1,25 @@
+- alias: No one is home
+  trigger:
+  - platform: state
+    entity_id: group.persons_all
+    to: "not_home"
+    for: "00:10:00"
+  action:
+  - service: light.turn_off
+    entity_id: all
+  - service: climate.set_preset_mode
+    data:
+      entity_id: climate.woonkamer
+      preset_mode: 'away'
+
+- alias: Someone is home
+  trigger:
+  - platform: state
+    entity_id: group.persons_all
+    to: "home"
+    for: "00:00:00"
+  action:
+  - service: climate.set_preset_mode
+    data:
+      entity_id: climate.woonkamer
+      preset_mode: 'home'

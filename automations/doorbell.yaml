@@ -1,0 +1,14 @@
+- alias: Doorbell ding turns on light
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.voordeur_ding
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: "{{ (states('sensor.entry_motion') | float) < (states('input_number.lux_treshold') | float) }}"
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.entry_bright

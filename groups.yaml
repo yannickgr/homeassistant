@@ -1,0 +1,4 @@
+persons_all:
+  name: All known people
+  entities:
+    - person.yannick

@@ -1,0 +1,101 @@
+- platform: template
+  sensors:
+    outside_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{states.weather.yannick_s_home.attributes.temperature}}"
+
+    living_current_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_living', 'current_temperature') }}"
+
+    living_set_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_living', 'temperature') }}"
+    
+    kitchen_current_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_kitchen', 'current_temperature') }}"
+
+    kitchen_set_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_kitchen', 'temperature') }}"
+
+    dining_current_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_dining', 'current_temperature') }}"
+
+    dining_set_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_dining', 'temperature') }}"
+
+    bathroom_current_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_bathroom', 'current_temperature') }}"
+
+    bathroom_set_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_bathroom', 'temperature') }}"
+
+    bedroom_current_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_bedroom', 'current_temperature') }}"
+
+    bedroom_set_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_bedroom', 'temperature') }}"
+
+    storage_current_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_storage', 'current_temperature') }}"
+
+    storage_set_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_storage', 'temperature') }}"
+
+    office_current_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_office', 'current_temperature') }}"
+
+    office_set_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_office', 'temperature') }}"
+
+    guestroom_current_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_guestroom', 'current_temperature') }}"
+
+    guestroom_set_temperature:
+      unit_of_measurement: '°'
+      value_template: "{{ state_attr('climate.homekit_radiator_guestroom', 'temperature') }}"
+
+
+- platform: systemmonitor
+  resources:
+  - type: disk_use_percent
+    arg: /
+  - type: disk_use
+    arg: /
+  - type: disk_free
+    arg: /
+  - type: processor_use
+  - type: memory_free
+
+- platform: time_date
+  display_options:
+    - 'time'
+    - 'date'
+    - 'date_time'
+
+- platform: afvalbeheer
+  wastecollector: Limburg.NET
+  resources:
+  - restafval
+  - papier
+  - pmd
+  postcode: !secret address_postcode
+  streetnumber: !secret address_streetnumber
+  streetname: !secret address_streetname
+  cityname: !secret address_cityname
+  upcomingsensor: 1
+  dateobject: 1
+  dutch: 1

@@ -1,0 +1,7 @@
+- alias: Turn Off Bedroom Fan
+  trigger:
+    platform: time
+    at: "02:30:00"
+  action:
+  - service: switch.turn_off
+    entity_id: switch.bedroom_fan_power

@@ -1,0 +1,12 @@
+*
+
+# Whitelist
+!*.yaml
+!.gitignore
+!automations
+!themes
+
+# Ignored
+secrets.yaml
+known_devices.yaml
+google_calendars.yaml

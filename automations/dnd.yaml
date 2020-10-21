@@ -1,0 +1,45 @@
+- alias: Do Not Disturbed Enabled
+  trigger:
+  - platform: state
+    entity_id: input_boolean.do_not_disturb
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: group.persons_all
+    state: 'home'
+  action:
+  - service: light.turn_off
+    entity_id: all
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_living
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_kitchen
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_bathroom
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_bedroom
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_office
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_guestroom
+  - service: script.turn_off_heating
+    data:
+      climate: climate.homekit_radiator_storage
+
+- alias: Disable Do Not Disturb
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.morning_alarm', 'timestamp') | int | timestamp_custom('%H:%M', false)) }}"
+  condition:
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'on'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.do_not_disturb

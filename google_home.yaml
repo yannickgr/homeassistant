@@ -1,0 +1,78 @@
+project_id: !secret google_assistant_project_id
+service_account: !include service_account.json
+report_state: true
+expose_by_default: false
+entity_config:
+  # Lights
+  light.entry:
+    expose: true
+  light.kitchen:
+    expose: true
+  light.dining:
+    expose: true
+  light.storage:
+    expose: true
+  light.toilet:
+    expose: true
+  light.living_wall:
+    expose: true
+  light.living_spots:
+    expose: true
+  light.living_floor:
+    expose: true
+  light.stairs:
+    expose: true
+  light.bathroom_mirror:
+    expose: true
+  light.bathroom_spot:
+    expose: true
+  light.bedroom_spot:
+    expose: true
+  light.bedroom_nightstands:
+    expose: true
+  light.office_table:
+    expose: true
+  light.office_floor:
+    expose: true
+
+  # Climate
+  climate.homekit_radiator_kitchen:
+    expose: true
+  climate.homekit_radiator_living:
+    expose: true
+  climate.homekit_radiator_bathroom:
+    expose: true
+  climate.homekit_radiator_bedroom:
+    expose: true
+  climate.homekit_radiator_office:
+    expose: true
+  climate.homekit_radiator_guestroom:
+    expose: true
+  climate.homekit_radiator_storage:
+    expose: true
+  
+  # Sensors
+  sensor.kitchen_current_temperature:
+    expose: true
+  sensor.living_current_temperature:
+    expose: true
+  sensor.bathroom_current_temperature:
+    expose: true
+  sensor.bedroom_current_temperature:
+    expose: true
+  
+  # Booleans
+  input_boolean.mailbox_mail:
+    expose: true
+
+  # Switches
+  switch.bathroom_fan:
+    expose: true
+  switch.bedroom_fan:
+    expose: true
+  switch.litterbox_needs_cleaning:
+    expose: true
+
+  # Media players
+  media_player.living_tv:
+    expose: true

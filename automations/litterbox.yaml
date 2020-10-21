@@ -1,0 +1,31 @@
+- alias: Motion in Litterbox
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.kitchen_litterbox
+    to: 'on'
+  action:
+  - service: input_number.increment
+    entity_id: input_number.litterbox_visits
+
+- alias: Litterbox needs cleaning
+  trigger:
+  - platform: state
+    entity_id: switch.litterbox_needs_cleaning
+    to: 'on'
+  action:
+  - service: input_number.increment
+    entity_id: input_number.badge_count
+  - service: script.notify_mobile
+    data:
+      title: "Kattenbak"
+      message: "🐈 De kattenbak is vuil"
+      sound: "meow.wav"
+
+- alias: Litterbox no longer needs cleaning
+  trigger:
+  - platform: state
+    entity_id: switch.litterbox_needs_cleaning
+    to: 'off'
+  action:
+  - service: input_number.decrement
+    entity_id: input_number.badge_count
