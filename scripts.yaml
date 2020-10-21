@@ -17,7 +17,7 @@ notify_mobile:
       message: '{{ message }}'
       data:
         push:
-          sound: "joi.wav" #'{{ sound }}'
+          sound: "joi.wav"
 
 turn_on_heating:
   alias: Turn the heating on for a given climate
