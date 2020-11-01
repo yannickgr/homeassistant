@@ -1,0 +1,43 @@
+- alias: Turn On Kitchen Light
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: kitchen_niko
+      event: 1000
+  action:
+    - service: scene.turn_on
+      entity_id: scene.kitchen_bright
+    
+- alias: Turn Off Kitchen Light
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: kitchen_niko
+      event: 2000
+  action:
+    - service: light.turn_off
+      entity_id: light.kitchen
+    
+- alias: Turn On Dining Room Light
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: kitchen_niko
+      event: 3000
+  action:
+    - service: scene.turn_on
+      entity_id: scene.dining_bright
+    
+- alias: Turn Off Dining Room Light
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: kitchen_niko
+      event: 4000
+  action:
+    - service: light.turn_off
+      entity_id: light.dining

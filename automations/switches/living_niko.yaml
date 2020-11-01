@@ -1,0 +1,43 @@
+- alias: Turn On Living Room Normal Light
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_niko
+      event: 1000
+  action:
+    - service: scene.turn_on
+      entity_id: scene.living_dim
+    
+- alias: Turn Off Living Room Light
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_niko
+      event: 2000
+  action:
+    - service: light.turn_off
+      entity_id: light.living
+      
+- alias: Turn On Living Room Bright Light
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_niko
+      event: 3000
+  action:
+    - service: scene.turn_on
+      entity_id: scene.living_bright
+      
+- alias: Turn On Living Room Dim Light
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_niko
+      event: 4000
+  action:
+    - service: scene.turn_on
+      entity_id: scene.living_dimmer
