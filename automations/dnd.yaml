@@ -22,15 +22,6 @@
   - service: script.turn_off_heating
     data:
       climate: climate.homekit_radiator_bedroom
-  - service: script.turn_off_heating
-    data:
-      climate: climate.homekit_radiator_office
-  - service: script.turn_off_heating
-    data:
-      climate: climate.homekit_radiator_guestroom
-  - service: script.turn_off_heating
-    data:
-      climate: climate.homekit_radiator_storage
 
 - alias: Disable Do Not Disturb
   trigger:
