@@ -1,5 +1,9 @@
 - platform: template
   sensors:
+    heating_power:
+      unit_of_measurement: '%'
+      value_template: "{{ (((states('sensor.keuken_heating')| int) + (states('sensor.woonkamer_heating')| int) + (states('sensor.berging_heating')| int) + (states('sensor.badkamer_heating')| int) + (states('sensor.slaapkamer_heating')| int) + (states('sensor.kantoor_heating')| int) + (states('sensor.gastenkamer_heating')| int)) / 7) | int }}"
+
     outside_temperature:
       unit_of_measurement: '°'
       value_template: "{{states.weather.yannick_s_home.attributes.temperature}}"
