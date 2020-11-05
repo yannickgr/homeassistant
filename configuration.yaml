@@ -7,6 +7,7 @@ group: !include groups.yaml
 light: !include lights.yaml
 switch: !include switches.yaml
 sensor: !include sensors.yaml
+vacuum: !include vacuums.yaml
 binary_sensor: !include binary_sensors.yaml
 tts: !include tts.yaml
 asuswrt: !include asuswrt.yaml
