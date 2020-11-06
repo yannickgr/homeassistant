@@ -34,31 +34,23 @@ entity_config:
     expose: true
   light.office_floor:
     expose: true
+  light.office_stairs:
+    expose: true
 
   # Climate
-  climate.homekit_radiator_kitchen:
+  climate.keuken:
     expose: true
-  climate.homekit_radiator_living:
+  climate.woonkamer:
     expose: true
-  climate.homekit_radiator_bathroom:
+  climate.badkamer:
     expose: true
-  climate.homekit_radiator_bedroom:
+  climate.slaapkamer:
     expose: true
-  climate.homekit_radiator_office:
+  climate.kantoor:
     expose: true
-  climate.homekit_radiator_guestroom:
+  climate.gastenkamer:
     expose: true
-  climate.homekit_radiator_storage:
-    expose: true
-  
-  # Sensors
-  sensor.kitchen_current_temperature:
-    expose: true
-  sensor.living_current_temperature:
-    expose: true
-  sensor.bathroom_current_temperature:
-    expose: true
-  sensor.bedroom_current_temperature:
+  climate.berging:
     expose: true
   
   # Booleans
@@ -68,11 +60,13 @@ entity_config:
   # Switches
   switch.bathroom_fan:
     expose: true
-  switch.bedroom_fan:
-    expose: true
   switch.litterbox_needs_cleaning:
     expose: true
 
   # Media players
   media_player.living_tv:
+    expose: true
+
+  # Vacuums
+  vacuum.consuela:
     expose: true
