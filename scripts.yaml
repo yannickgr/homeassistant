@@ -17,8 +17,7 @@ notify_mobile:
       message: '{{ message }}'
       data:
         push:
-          sound: "joi.wav"
-
+          sound: joi.wav
 turn_on_heating:
   alias: Turn the heating on for a given climate
   fields:
@@ -29,8 +28,7 @@ turn_on_heating:
   - service: climate.set_temperature
     data_template:
       entity_id: '{{ climate }}'
-      temperature: "{{ states('input_number.heating_on') | float }}"
-
+      temperature: '{{ states(''input_number.heating_on'') | float }}'
 turn_off_heating:
   alias: Turn the heating off for a given climate
   fields:
@@ -41,4 +39,12 @@ turn_off_heating:
   - service: climate.set_temperature
     data_template:
       entity_id: '{{ climate }}'
-      temperature: "{{ states('input_number.heating_standby') | float }}"
+      temperature: '{{ states(''input_number.heating_standby'') | float }}'
+downstairs_cosy:
+  alias: downstairs_cosy
+  sequence:
+  - scene: scene.downstairs_cosy
+  - service: input_boolean.turn_off
+    data: {}
+    entity_id: input_boolean.kitchen_motion_on
+  mode: single

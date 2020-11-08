@@ -352,3 +352,70 @@
       friendly_name: living_wall
       state: 'on'
       supported_features: 41
+- id: '1604768816387'
+  name: downstairs_cosy
+  entities:
+    light.living_floor:
+      min_mireds: 153
+      max_mireds: 454
+      brightness: 128
+      color_temp: 454
+      is_deconz_group: false
+      friendly_name: Staanlamp
+      icon: mdi:floor-lamp
+      supported_features: 43
+      state: 'on'
+    light.living_spot_1:
+      min_mireds: 140
+      max_mireds: 650
+      brightness: 128
+      color_temp: 454
+      is_deconz_group: false
+      friendly_name: living_spot_1
+      supported_features: 43
+      state: 'on'
+    light.living_spot_2:
+      min_mireds: 140
+      max_mireds: 650
+      brightness: 128
+      color_temp: 454
+      is_deconz_group: false
+      friendly_name: living_spot_2
+      supported_features: 43
+      state: 'on'
+    light.living_wall_1:
+      brightness: 64
+      is_deconz_group: false
+      friendly_name: living_wall_1
+      supported_features: 41
+      state: 'on'
+    light.living_wall_2:
+      brightness: 64
+      is_deconz_group: false
+      friendly_name: living_wall_2
+      supported_features: 41
+      state: 'on'
+    light.dining:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      brightness: 111
+      color_temp: 454
+      is_deconz_group: true
+      all_on: true
+      friendly_name: Tafel
+      supported_features: 47
+      state: 'on'
+    light.kitchen:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      brightness: 178
+      color_temp: 454
+      is_deconz_group: true
+      all_on: true
+      friendly_name: Eiland
+      supported_features: 47
+      state: 'on'

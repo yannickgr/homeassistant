@@ -22,6 +22,8 @@
   - service: script.turn_off_heating
     data:
       climate: climate.homekit_radiator_bedroom
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.kitchen_motion_on
 
 - alias: Disable Do Not Disturb
   trigger:
