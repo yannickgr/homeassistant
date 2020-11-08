@@ -18,7 +18,7 @@
       event: 2000
   action:
     - service: light.turn_off
-      entity_id: light.bedroom_nightstands
+      entity_id: light.bedroom
     
 - alias: Turn On Bedroom Spot
   trigger:
@@ -40,7 +40,7 @@
       event: 4000
   action:
     - service: light.turn_off
-      entity_id: light.bedroom_spot
+      entity_id: light.bedroom
 
 - alias: Start the night but light in the bedroom
   trigger:
