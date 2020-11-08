@@ -19,6 +19,8 @@
   action:
     - service: light.turn_off
       entity_id: light.living
+    - service: media_player.media_stop
+      entity_id: media_player.living
       
 - alias: Turn On Living Room Bright Light
   trigger:
@@ -31,7 +33,7 @@
     - service: scene.turn_on
       entity_id: scene.living_bright
       
-- alias: Turn On Living Room Dim Light
+- alias: Turn On Downstairs Cosy Mode
   trigger:
     platform: event
     event_type: deconz_event
@@ -39,5 +41,5 @@
       id: living_niko
       event: 4000
   action:
-    - service: scene.turn_on
-      entity_id: scene.living_dimmer
+    - service: script.turn_on
+      entity_id: script.downstairs_cosy
