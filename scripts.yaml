@@ -46,7 +46,8 @@ turn_off_heating:
 downstairs_cosy:
   alias: downstairs_cosy
   sequence:
-  - scene: scene.downstairs_cosy
+  - service: scene.turn_on
+    entity_id: scene.downstairs_cosy
   - service: input_boolean.turn_off
     entity_id: input_boolean.kitchen_motion_on
   - service: media_player.volume_set
@@ -61,3 +62,11 @@ downstairs_cosy:
     entity_id: media_player.living
     data:
       shuffle: true
+  - service: climate.set_temperature
+    entity_id: climate.keuken
+    data:
+      temperature: 22
+  - service: climate.set_temperature
+    entity_id: climate.woonkamer
+    data:
+      temperature: 22
