@@ -68,5 +68,5 @@ entity_config:
     expose: true
 
   # Vacuums
-  vacuum.consuela:
+  vacuum.portia:
     expose: true
