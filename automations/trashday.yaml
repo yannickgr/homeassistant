@@ -1,0 +1,110 @@
+- alias: Tomorrow is trash day for restafval
+  trigger:
+    platform: time
+    at: "19:00:00"
+  condition:
+  - condition: state
+    entity_id: sensor.limburg_net_morgen
+    state: 'restafval'
+  - condition: state
+    entity_id: input_boolean.trashday_restafval
+    state: 'off'
+  action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.trashday_restafval
+
+- alias: Take out Restafval
+  trigger:
+  - platform: state
+    entity_id: input_boolean.trashday_restafval
+    to: 'on'
+  action:
+  - service: input_number.increment
+    entity_id: input_number.badge_count
+  - service: script.notify_mobile
+    data:
+      title: "Afval"
+      message: "👝 Restafval buitenzetten"
+
+- alias: Restafval has been taken out
+  trigger:
+  - platform: state
+    entity_id: input_boolean.trashday_restafval
+    to: 'off'
+  action:
+  - service: input_number.decrement
+    entity_id: input_number.badge_count
+
+- alias: Tomorrow is trash day for PMD
+  trigger:
+    platform: time
+    at: "19:00:00"
+  condition:
+  - condition: state
+    entity_id: sensor.limburg_net_morgen
+    state: 'pmd'
+  - condition: state
+    entity_id: input_boolean.trashday_pmd
+    state: 'off'
+  action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.trashday_pmd
+
+- alias: Take out PMD
+  trigger:
+  - platform: state
+    entity_id: input_boolean.trashday_pmd
+    to: 'on'
+  action:
+  - service: input_number.increment
+    entity_id: input_number.badge_count
+  - service: script.notify_mobile
+    data:
+      title: "Afval"
+      message: "🥫 PMD buitenzetten"
+
+- alias: PMD has been taken out
+  trigger:
+  - platform: state
+    entity_id: input_boolean.trashday_pmd
+    to: 'off'
+  action:
+  - service: input_number.decrement
+    entity_id: input_number.badge_count
+
+- alias: Tomorrow is trash day for papier
+  trigger:
+    platform: time
+    at: "19:00:00"
+  condition:
+  - condition: state
+    entity_id: sensor.limburg_net_morgen
+    state: 'papier'
+  - condition: state
+    entity_id: input_boolean.trashday_papier
+    state: 'off'
+  action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.trashday_papier
+
+- alias: Take out papier
+  trigger:
+  - platform: state
+    entity_id: input_boolean.trashday_papier
+    to: 'on'
+  action:
+  - service: input_number.increment
+    entity_id: input_number.badge_count
+  - service: script.notify_mobile
+    data:
+      title: "Afval"
+      message: "📦 Papier buitenzetten"
+
+- alias: Papier has been taken out
+  trigger:
+  - platform: state
+    entity_id: input_boolean.trashday_papier
+    to: 'off'
+  action:
+  - service: input_number.decrement
+    entity_id: input_number.badge_count
