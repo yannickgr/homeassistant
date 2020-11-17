@@ -70,3 +70,23 @@ downstairs_cosy:
     entity_id: climate.woonkamer
     data:
       temperature: 22
+
+clean_around_litterbox:
+  alias: Clean around the litterbox
+  sequence:
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  - condition: state
+    entity_id: vacuum.portia
+    state: 'docked'
+  - service: vacuum.set_fan_speed
+    data:
+      entity_id: vacuum.portia
+      fan_speed: Silent
+  - service: xiaomi_miio.vacuum_clean_zone
+    data:
+      entity_id: vacuum.portia
+      zone: [[23500,29400,24500,28400]]
+      repeats: 1
+  

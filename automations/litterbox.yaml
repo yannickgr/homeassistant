@@ -6,6 +6,9 @@
   action:
   - service: input_number.increment
     entity_id: input_number.litterbox_visits
+  - delay: '00:05:00'
+  - service: script.turn_on
+    entity_id: script.clean_around_litterbox
 
 - alias: Litterbox needs cleaning
   trigger:
@@ -29,3 +32,5 @@
   action:
   - service: input_number.decrement
     entity_id: input_number.badge_count
+  - service: script.turn_on
+    entity_id: script.clean_around_litterbox
