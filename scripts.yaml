@@ -90,3 +90,21 @@ clean_around_litterbox:
       zone: [[23500,29400,24500,28400]]
       repeats: 1
   
+clean_kitchen_aisle:
+  alias: Clean the kitchen aisle
+  sequence:
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  - condition: state
+    entity_id: vacuum.portia
+    state: 'docked'
+  - service: vacuum.set_fan_speed
+    data:
+      entity_id: vacuum.portia
+      fan_speed: Silent
+  - service: xiaomi_miio.vacuum_clean_zone
+    data:
+      entity_id: vacuum.portia
+      zone: [[23500,29400,24500,28400], [22500,30000,28800,29400]]
+      repeats: 1
