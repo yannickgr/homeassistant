@@ -1,12 +1,3 @@
-- platform: mqtt
-  name: "bathroom_fan"
-  state_topic: "shellies/shelly1-E098068CE7F5/relay/0" 
-  command_topic: "shellies/shelly1-E098068CE7F5/relay/0/command"
-  payload_on: "on"
-  payload_off: "off"
-  state_on: "on"
-  state_off: "off"
-
 - platform: template
   switches:
     heating_living:
