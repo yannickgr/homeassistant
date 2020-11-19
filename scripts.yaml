@@ -50,6 +50,18 @@ downstairs_cosy:
     entity_id: scene.downstairs_cosy
   - service: input_boolean.turn_off
     entity_id: input_boolean.kitchen_motion_on
+  - service: climate.set_temperature
+    entity_id: climate.keuken
+    data:
+      temperature: 22
+  - service: climate.set_temperature
+    entity_id: climate.woonkamer
+    data:
+      temperature: 22
+
+downstairs_music:
+  alias: downstairs_music
+  sequence:
   - service: media_player.volume_set
     entity_id: media_player.living
     data:
@@ -62,14 +74,6 @@ downstairs_cosy:
     entity_id: media_player.living
     data:
       shuffle: true
-  - service: climate.set_temperature
-    entity_id: climate.keuken
-    data:
-      temperature: 22
-  - service: climate.set_temperature
-    entity_id: climate.woonkamer
-    data:
-      temperature: 22
 
 clean_around_litterbox:
   alias: Clean around the litterbox
