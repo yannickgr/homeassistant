@@ -8,22 +8,8 @@
     entity_id: group.persons_all
     state: 'home'
   action:
-  - service: light.turn_off
-    entity_id: all
-  - service: script.turn_off_heating
-    data:
-      climate: climate.homekit_radiator_living
-  - service: script.turn_off_heating
-    data:
-      climate: climate.homekit_radiator_kitchen
-  - service: script.turn_off_heating
-    data:
-      climate: climate.homekit_radiator_bathroom
-  - service: script.turn_off_heating
-    data:
-      climate: climate.homekit_radiator_bedroom
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.kitchen_motion_on
+  - service: script.turn_on
+    entity_id: script.turn_everything_off
 
 - alias: Disable Do Not Disturb
   trigger:

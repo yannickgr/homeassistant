@@ -30,6 +30,7 @@ filter:
 
     # Booleans
     - input_boolean.mailbox_mail
+    - input_boolean.do_not_disturb
 
     # Switches
     - switch.bathroom_fan
@@ -46,3 +47,4 @@ filter:
     - script.clean_kitchen_aisle
     - script.downstairs_cosy
     - script.downstairs_music
+    - script.turn_everything_off
