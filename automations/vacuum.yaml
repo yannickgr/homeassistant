@@ -1,0 +1,10 @@
+- alias: Reset vacuum fan speed
+  trigger:
+  - platform: state
+    entity_id: vacuum.portia
+    to: 'docked'
+  action:
+  - service: vacuum.set_fan_speed
+    data:
+      entity_id: vacuum.portia
+      fan_speed: Standard
