@@ -10,67 +10,59 @@
 
     living_current_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_living', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.woonkamer', 'current_temperature') }}"
 
     living_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_living', 'temperature') }}"
+      value_template: "{{ state_attr('climate.woonkamer', 'temperature') }}"
     
     kitchen_current_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_kitchen', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.keuken', 'current_temperature') }}"
 
     kitchen_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_kitchen', 'temperature') }}"
-
-    dining_current_temperature:
-      unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_dining', 'current_temperature') }}"
-
-    dining_set_temperature:
-      unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_dining', 'temperature') }}"
+      value_template: "{{ state_attr('climate.keuken', 'temperature') }}"
 
     bathroom_current_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_bathroom', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.badkamer', 'current_temperature') }}"
 
     bathroom_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_bathroom', 'temperature') }}"
+      value_template: "{{ state_attr('climate.badkamer', 'temperature') }}"
 
     bedroom_current_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_bedroom', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.slaapkamer', 'current_temperature') }}"
 
     bedroom_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_bedroom', 'temperature') }}"
+      value_template: "{{ state_attr('climate.slaapkamer', 'temperature') }}"
 
     storage_current_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_storage', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.berging', 'current_temperature') }}"
 
     storage_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_storage', 'temperature') }}"
+      value_template: "{{ state_attr('climate.berging', 'temperature') }}"
 
     office_current_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_office', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.kantoor', 'current_temperature') }}"
 
     office_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_office', 'temperature') }}"
+      value_template: "{{ state_attr('climate.kantoor', 'temperature') }}"
 
     guestroom_current_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_guestroom', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.gastenkamer', 'current_temperature') }}"
 
     guestroom_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.homekit_radiator_guestroom', 'temperature') }}"
+      value_template: "{{ state_attr('climate.gastenkamer', 'temperature') }}"
 
 
 - platform: systemmonitor

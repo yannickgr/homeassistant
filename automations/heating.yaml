@@ -12,13 +12,13 @@
   action:
   - service: script.turn_on_heating
     data:
-      climate: climate.homekit_radiator_bathroom
+      climate: climate.badkamer
   - service: script.turn_on_heating
     data:
-      climate: climate.homekit_radiator_living
+      climate: climate.woonkamer
   - service: script.turn_on_heating
     data:
-      climate: climate.homekit_radiator_kitchen
+      climate: climate.keuken
 
 - alias: Heating Downstairs Morning Off
   trigger:
@@ -37,10 +37,10 @@
   action:
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_living
+      climate: climate.woonkamer
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_kitchen
+      climate: climate.keuken
 
 - alias: Heating Upstairs Morning Off
   trigger:
@@ -53,10 +53,10 @@
   action:
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_bathroom
+      climate: climate.badkamer
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_bedroom
+      climate: climate.slaapkamer
 
 - alias: Heating Evening On
   trigger:
@@ -72,10 +72,10 @@
   action:
   - service: script.turn_on_heating
     data:
-      climate: climate.homekit_radiator_living
+      climate: climate.woonkamer
   - service: script.turn_on_heating
     data:
-      climate: climate.homekit_radiator_kitchen
+      climate: climate.keuken
 
 - alias: Heating Evening Off
   trigger:
@@ -88,13 +88,13 @@
   action:
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_living
+      climate: climate.woonkamer
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_kitchen
+      climate: climate.keuken
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_bathroom
+      climate: climate.badkamer
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_bedroom
+      climate: climate.slaapkamer
