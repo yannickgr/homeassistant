@@ -18,7 +18,6 @@ notify_mobile:
       data:
         push:
           sound: joi.wav
-
 turn_on_heating:
   alias: Turn the heating on for a given climate
   fields:
@@ -30,7 +29,6 @@ turn_on_heating:
     data_template:
       entity_id: '{{ climate }}'
       temperature: '{{ states(''input_number.heating_on'') | float }}'
-
 turn_off_heating:
   alias: Turn the heating off for a given climate
   fields:
@@ -42,7 +40,6 @@ turn_off_heating:
     data_template:
       entity_id: '{{ climate }}'
       temperature: '{{ states(''input_number.heating_standby'') | float }}'
-
 downstairs_cosy:
   alias: downstairs_cosy
   sequence:
@@ -50,15 +47,7 @@ downstairs_cosy:
     entity_id: scene.downstairs_cosy
   - service: input_boolean.turn_off
     entity_id: input_boolean.kitchen_motion_on
-  - service: climate.set_temperature
-    entity_id: climate.keuken
-    data:
-      temperature: 22
-  - service: climate.set_temperature
-    entity_id: climate.woonkamer
-    data:
-      temperature: 22
-
+  mode: single
 downstairs_music:
   alias: downstairs_music
   sequence:
@@ -74,7 +63,6 @@ downstairs_music:
     entity_id: media_player.living
     data:
       shuffle: true
-
 clean_around_litterbox:
   alias: Clean around the litterbox
   sequence:
@@ -83,7 +71,7 @@ clean_around_litterbox:
     state: 'off'
   - condition: state
     entity_id: vacuum.portia
-    state: 'docked'
+    state: docked
   - service: vacuum.set_fan_speed
     data:
       entity_id: vacuum.portia
@@ -91,9 +79,12 @@ clean_around_litterbox:
   - service: xiaomi_miio.vacuum_clean_zone
     data:
       entity_id: vacuum.portia
-      zone: [[23500,29400,24500,28400]]
+      zone:
+      - - 23500
+        - 29400
+        - 24500
+        - 28400
       repeats: 1
-  
 clean_kitchen_aisle:
   alias: Clean the kitchen aisle
   sequence:
@@ -102,7 +93,7 @@ clean_kitchen_aisle:
     state: 'off'
   - condition: state
     entity_id: vacuum.portia
-    state: 'docked'
+    state: docked
   - service: vacuum.set_fan_speed
     data:
       entity_id: vacuum.portia
@@ -110,9 +101,16 @@ clean_kitchen_aisle:
   - service: xiaomi_miio.vacuum_clean_zone
     data:
       entity_id: vacuum.portia
-      zone: [[23500,29400,24500,28400], [22500,30000,28800,29400]]
+      zone:
+      - - 23500
+        - 29400
+        - 24500
+        - 28400
+      - - 22500
+        - 30000
+        - 28800
+        - 29400
       repeats: 1
-
 turn_everything_off:
   alias: Turn everything off
   sequence:
@@ -120,15 +118,15 @@ turn_everything_off:
     entity_id: all
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_living
+      climate: climate.woonkamer
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_kitchen
+      climate: climate.keuken
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_bathroom
+      climate: climate.badkamer
   - service: script.turn_off_heating
     data:
-      climate: climate.homekit_radiator_bedroom
+      climate: climate.slaapkamer
   - service: input_boolean.turn_on
     entity_id: input_boolean.kitchen_motion_on
