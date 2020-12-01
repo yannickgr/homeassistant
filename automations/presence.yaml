@@ -5,8 +5,6 @@
     to: "not_home"
     for: "00:10:00"
   action:
-  - service: light.turn_off
-    entity_id: all
   - service: climate.set_preset_mode
     data:
       entity_id: climate.woonkamer
