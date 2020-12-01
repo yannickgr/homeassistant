@@ -1,8 +1,8 @@
 - alias: Turn Living Lights On Before Sunset
   trigger:
-    platform: sun
-    event: sunset
-    offset: '-00:30:00'
+  - platform: state
+    entity_id: binary_sensor.night
+    to: 'on'
   condition:
   - condition: state
     entity_id: light.living
@@ -16,9 +16,9 @@
 
 - alias: Turn Kitchen Lights On Before Sunset
   trigger:
-    platform: sun
-    event: sunset
-    offset: '-00:30:00'
+  - platform: state
+    entity_id: binary_sensor.night
+    to: 'on'
   condition:
   - condition: state
     entity_id: light.kitchen
@@ -32,9 +32,9 @@
 
 - alias: Turn Entry Lights On Before Sunset
   trigger:
-    platform: sun
-    event: sunset
-    offset: '-00:15:00'
+  - platform: state
+    entity_id: binary_sensor.night
+    to: 'on'
   condition:
   - condition: state
     entity_id: input_boolean.do_not_disturb

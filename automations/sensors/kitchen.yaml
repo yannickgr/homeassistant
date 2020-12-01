@@ -22,14 +22,14 @@
     entity_id: binary_sensor.kitchen_motion
     to: 'off'
     for:
-      minutes: 10
+      minutes: "{{ states('input_number.light_timeout_kitchen')|int }}"
   condition:
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
   - condition: state
-    entity_id: sun.sun
-    state: 'below_horizon'
+    entity_id: binary_sensor.night
+    state: 'on'
   - condition: state
     entity_id: input_boolean.kitchen_motion_on
     state: 'on'
@@ -49,8 +49,8 @@
     entity_id: input_boolean.do_not_disturb
     state: 'off'
   - condition: state
-    entity_id: sun.sun
-    state: 'above_horizon'
+    entity_id: binary_sensor.night
+    state: 'off'
   - condition: state
     entity_id: input_boolean.kitchen_motion_on
     state: 'on'
