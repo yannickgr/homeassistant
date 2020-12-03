@@ -52,5 +52,3 @@
       entity_id: light.bathroom
     - service: input_boolean.turn_off
       entity_id: input_boolean.bathroom_manual_override
-    - service: media_player.media_pause
-      entity_id: media_player.bedroom
