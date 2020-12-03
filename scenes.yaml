@@ -108,25 +108,60 @@
   name: bedroom_bright
   entities:
     light.bedroom_spot:
-      brightness: 255
-      color_temp: 454
+      min_mireds: 140
+      max_mireds: 650
       friendly_name: bedroom_spot
-      is_deconz_group: false
-      max_mireds: 65535
-      min_mireds: 153
-      state: 'on'
       supported_features: 43
+      state: unavailable
     light.bedroom_nightstands:
-      brightness: 255
-      color_temp: 65535
+      min_mireds: 140
+      max_mireds: 650
+      brightness: 254
+      color_temp: 454
       entity_id:
       - light.bedroom_nightstand_1
       - light.bedroom_nightstand_2
       friendly_name: bedroom_nightstands
-      max_mireds: 65535
-      min_mireds: 153
-      state: 'on'
+      icon: mdi:lightbulb-group
       supported_features: 43
+      state: 'on'
+    light.bedroom_nightstand_1:
+      min_mireds: 140
+      max_mireds: 650
+      brightness: 254
+      color_temp: 454
+      is_deconz_group: false
+      friendly_name: bedroom_nightstand_1
+      supported_features: 43
+      state: 'on'
+    light.bedroom_nightstand_2:
+      min_mireds: 140
+      max_mireds: 650
+      brightness: 254
+      color_temp: 454
+      is_deconz_group: false
+      friendly_name: bedroom_nightstand_2
+      supported_features: 43
+      state: 'on'
+    light.bedroom_floor:
+      effect_list:
+      - colorloop
+      brightness: 254
+      hs_color:
+      - 54.839
+      - 36.471
+      rgb_color:
+      - 255
+      - 247
+      - 161
+      xy_color:
+      - 0.392
+      - 0.418
+      is_deconz_group: false
+      friendly_name: Vloerlamp
+      icon: mdi:floor-lamp
+      supported_features: 61
+      state: 'on'
 - id: '1577629582495'
   name: bathroom_bright
   entities:
@@ -321,16 +356,54 @@
   name: bedroom_nightstands_bright
   entities:
     light.bedroom_nightstands:
+      min_mireds: 140
+      max_mireds: 650
       brightness: 50
-      color_temp: 65535
+      color_temp: 454
       entity_id:
       - light.bedroom_nightstand_1
       - light.bedroom_nightstand_2
       friendly_name: bedroom_nightstands
-      max_mireds: 65535
-      min_mireds: 153
-      state: 'on'
+      icon: mdi:lightbulb-group
       supported_features: 43
+      state: 'on'
+    light.bedroom_nightstand_1:
+      min_mireds: 140
+      max_mireds: 650
+      brightness: 50
+      color_temp: 454
+      is_deconz_group: false
+      friendly_name: bedroom_nightstand_1
+      supported_features: 43
+      state: 'on'
+    light.bedroom_nightstand_2:
+      min_mireds: 140
+      max_mireds: 650
+      brightness: 50
+      color_temp: 454
+      is_deconz_group: false
+      friendly_name: bedroom_nightstand_2
+      supported_features: 43
+      state: 'on'
+    light.bedroom_floor:
+      effect_list:
+      - colorloop
+      brightness: 128
+      hs_color:
+      - 54.894
+      - 36.863
+      rgb_color:
+      - 255
+      - 247
+      - 160
+      xy_color:
+      - 0.393
+      - 0.419
+      is_deconz_group: false
+      friendly_name: Vloerlamp
+      icon: mdi:floor-lamp
+      supported_features: 61
+      state: 'on'
 - id: '1597166894933'
   name: living_dimmer
   entities:
