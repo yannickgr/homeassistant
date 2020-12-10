@@ -29,5 +29,3 @@
   action:
   - service: input_number.decrement
     entity_id: input_number.badge_count
-  - service: script.turn_on
-    entity_id: script.clean_around_litterbox
