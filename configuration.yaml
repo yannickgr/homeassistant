@@ -12,6 +12,4 @@ binary_sensor: !include binary_sensors.yaml
 tts: !include tts.yaml
 asuswrt: !include asuswrt.yaml
 webostv: !include webostv.yaml
-google: !include google.yaml
-google_assistant: !include google_home.yaml
 homekit: !include homekit.yaml
