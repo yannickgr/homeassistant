@@ -1,5 +1,6 @@
 default_config:
 frontend: !include frontend.yaml
+recorder: !include recorder.yaml
 automation: !include_dir_merge_list automations/
 scene: !include scenes.yaml
 script: !include scripts.yaml
