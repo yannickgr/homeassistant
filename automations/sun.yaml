@@ -1,4 +1,4 @@
-- alias: Turn Living Lights On Before Sunset
+- alias: Turn Living Lights On Before Sunset When Noone is Home
   trigger:
   - platform: state
     entity_id: binary_sensor.night
@@ -10,9 +10,31 @@
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
+  - condition: state
+    entity_id: group.persons_all
+    state: 'not_home'
   action:
   - service: scene.turn_on
     entity_id: scene.living_dim
+
+- alias: Turn Living Lights On Before Sunset When Someone is Home
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.night
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: light.living
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  - condition: state
+    entity_id: group.persons_all
+    state: 'home'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.living_cosy
 
 - alias: Turn Kitchen Lights On Before Sunset
   trigger:
