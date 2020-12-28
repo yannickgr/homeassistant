@@ -1,4 +1,4 @@
-- alias: "Light theme after Sunrise"
+- alias: Light Theme After Sunrise
   trigger:
     platform: sun
     event: sunrise
@@ -7,7 +7,7 @@
       data:
         name: Google Light Theme
 
-- alias: "Dark theme after Sunset"
+- alias: Dark Theme After Sunset
   trigger:
     platform: sun
     event: sunset
@@ -16,7 +16,7 @@
       data:
         name: Google Dark Theme
 
-- alias: 'Light theme after reboot in day'
+- alias: Light Theme After Reboot in Day
   trigger:
     platform: homeassistant
     event: start
@@ -29,7 +29,7 @@
     data:
       name: Google Light Theme
 
-- alias: 'Dark theme after reboot in night'
+- alias: Dark Theme After Reboot in Night
   trigger:
     platform: homeassistant
     event: start

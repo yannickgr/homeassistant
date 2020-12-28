@@ -4,10 +4,6 @@
       unit_of_measurement: '%'
       value_template: "{{ (((states('sensor.keuken_heating')| int) + (states('sensor.woonkamer_heating')| int) + (states('sensor.berging_heating')| int) + (states('sensor.badkamer_heating')| int) + (states('sensor.slaapkamer_heating')| int) + (states('sensor.kantoor_heating')| int) + (states('sensor.gastenkamer_heating')| int)) / 7) | int }}"
 
-    outside_temperature:
-      unit_of_measurement: '°'
-      value_template: "{{states.weather.yannick_s_home.attributes.temperature}}"
-
     living_current_temperature:
       unit_of_measurement: '°'
       value_template: "{{ state_attr('climate.woonkamer', 'current_temperature') }}"
@@ -64,34 +60,8 @@
       unit_of_measurement: '°'
       value_template: "{{ state_attr('climate.gastenkamer', 'temperature') }}"
 
-
-- platform: systemmonitor
-  resources:
-  - type: disk_use_percent
-    arg: /
-  - type: disk_use
-    arg: /
-  - type: disk_free
-    arg: /
-  - type: processor_use
-  - type: memory_free
-
 - platform: time_date
   display_options:
     - 'time'
     - 'date'
     - 'date_time'
-
-- platform: afvalbeheer
-  wastecollector: Limburg.NET
-  resources:
-  - restafval
-  - papier
-  - pmd
-  postcode: !secret address_postcode
-  streetnumber: !secret address_streetnumber
-  streetname: !secret address_streetname
-  cityname: !secret address_cityname
-  upcomingsensor: 1
-  dateobject: 1
-  dutch: 1

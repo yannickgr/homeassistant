@@ -1,4 +1,4 @@
-- alias: No one is home
+- alias: Noone is Home
   trigger:
   - platform: state
     entity_id: group.persons_all
@@ -10,7 +10,7 @@
       entity_id: climate.woonkamer
       preset_mode: 'away'
 
-- alias: Someone is home
+- alias: Someone is Home
   trigger:
   - platform: state
     entity_id: group.persons_all

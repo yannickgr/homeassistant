@@ -1,5 +1,5 @@
 notify_mobile:
-  alias: Send a notification to the mobile devices
+  alias: Send a Notification to the Mobile Devices
   fields:
     title:
       description: Title of the notification
@@ -18,8 +18,9 @@ notify_mobile:
       data:
         push:
           sound: joi.wav
+
 turn_on_heating:
-  alias: Turn the heating on for a given climate
+  alias: Turn the Heating On for a Given Climate
   fields:
     climate:
       description: The climate
@@ -29,8 +30,9 @@ turn_on_heating:
     data_template:
       entity_id: '{{ climate }}'
       temperature: '{{ states(''input_number.heating_on'') | float }}'
+
 turn_off_heating:
-  alias: Turn the heating off for a given climate
+  alias: Turn the Heating Off for a Given Climate
   fields:
     climate:
       description: The climate
@@ -40,31 +42,18 @@ turn_off_heating:
     data_template:
       entity_id: '{{ climate }}'
       temperature: '{{ states(''input_number.heating_standby'') | float }}'
+
 downstairs_cosy:
-  alias: downstairs_cosy
+  alias: Downstairs Cosy Mode
   sequence:
   - service: scene.turn_on
     entity_id: scene.downstairs_cosy
   - service: input_boolean.turn_off
     entity_id: input_boolean.kitchen_motion_on
   mode: single
-downstairs_music:
-  alias: downstairs_music
-  sequence:
-  - service: media_player.volume_set
-    entity_id: media_player.living
-    data:
-      volume_level: 0.07
-  - service: media_player.select_source
-    entity_id: media_player.living
-    data:
-      source: Home Alternative
-  - service: media_player.shuffle_set
-    entity_id: media_player.living
-    data:
-      shuffle: true
+
 clean_around_litterbox:
-  alias: Clean around the litterbox
+  alias: Clean Around the Litterbox
   sequence:
   - condition: state
     entity_id: input_boolean.do_not_disturb
@@ -85,8 +74,9 @@ clean_around_litterbox:
         - 24500
         - 28400
       repeats: 1
+
 clean_kitchen_aisle:
-  alias: Clean the kitchen aisle
+  alias: Clean the Kitchen Aisle
   sequence:
   - condition: state
     entity_id: input_boolean.do_not_disturb
@@ -111,8 +101,9 @@ clean_kitchen_aisle:
         - 28800
         - 29400
       repeats: 1
+
 turn_everything_off:
-  alias: Turn everything off
+  alias: Turn Everything Off
   sequence:
   - service: light.turn_off
     entity_id: all

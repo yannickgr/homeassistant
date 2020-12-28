@@ -12,5 +12,4 @@ vacuum: !include vacuums.yaml
 binary_sensor: !include binary_sensors.yaml
 tts: !include tts.yaml
 asuswrt: !include asuswrt.yaml
-webostv: !include webostv.yaml
 homekit: !include homekit.yaml

@@ -1,4 +1,4 @@
-- alias: Reset vacuum fan speed
+- alias: Reset Vacuum Fan Speed
   trigger:
   - platform: state
     entity_id: vacuum.portia

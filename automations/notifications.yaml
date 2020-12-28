@@ -1,4 +1,4 @@
-- alias: Update notification badge
+- alias: Update Notification Badge
   trigger:
   - platform: state
     entity_id: input_number.badge_count

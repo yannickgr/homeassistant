@@ -1,2 +1,0 @@
-host: !secret ip_tv
-name: living_tv
