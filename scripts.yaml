@@ -109,15 +109,15 @@ turn_everything_off:
     entity_id: all
   - service: script.turn_off_heating
     data:
-      climate: climate.woonkamer
+      climate: climate.living
   - service: script.turn_off_heating
     data:
-      climate: climate.keuken
+      climate: climate.kitchen
   - service: script.turn_off_heating
     data:
-      climate: climate.badkamer
+      climate: climate.bathroom
   - service: script.turn_off_heating
     data:
-      climate: climate.slaapkamer
+      climate: climate.bedroom
   - service: input_boolean.turn_on
     entity_id: input_boolean.kitchen_motion_on

@@ -1,64 +1,32 @@
 - platform: template
   sensors:
-    heating_power:
-      unit_of_measurement: '%'
-      value_template: "{{ (((states('sensor.keuken_heating')| int) + (states('sensor.woonkamer_heating')| int) + (states('sensor.berging_heating')| int) + (states('sensor.badkamer_heating')| int) + (states('sensor.slaapkamer_heating')| int) + (states('sensor.kantoor_heating')| int) + (states('sensor.gastenkamer_heating')| int)) / 7) | int }}"
-
-    living_current_temperature:
-      unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.woonkamer', 'current_temperature') }}"
-
     living_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.woonkamer', 'temperature') }}"
+      value_template: "{{ state_attr('climate.living', 'temperature') }}"
     
-    kitchen_current_temperature:
-      unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.keuken', 'current_temperature') }}"
-
     kitchen_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.keuken', 'temperature') }}"
-
-    bathroom_current_temperature:
-      unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.badkamer', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.kitchen', 'temperature') }}"
 
     bathroom_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.badkamer', 'temperature') }}"
-
-    bedroom_current_temperature:
-      unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.slaapkamer', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.bathroom', 'temperature') }}"
 
     bedroom_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.slaapkamer', 'temperature') }}"
-
-    storage_current_temperature:
-      unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.berging', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.bedroom', 'temperature') }}"
 
     storage_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.berging', 'temperature') }}"
-
-    office_current_temperature:
-      unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.kantoor', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.storage', 'temperature') }}"
 
     office_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.kantoor', 'temperature') }}"
-
-    guestroom_current_temperature:
-      unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.gastenkamer', 'current_temperature') }}"
+      value_template: "{{ state_attr('climate.office', 'temperature') }}"
 
     guestroom_set_temperature:
       unit_of_measurement: '°'
-      value_template: "{{ state_attr('climate.gastenkamer', 'temperature') }}"
+      value_template: "{{ state_attr('climate.guestroom', 'temperature') }}"
 
 - platform: time_date
   display_options:

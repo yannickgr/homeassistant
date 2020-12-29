@@ -7,7 +7,7 @@
   action:
   - service: climate.set_preset_mode
     data:
-      entity_id: climate.woonkamer
+      entity_id: climate.living
       preset_mode: 'away'
 
 - alias: Someone is Home
@@ -19,5 +19,5 @@
   action:
   - service: climate.set_preset_mode
     data:
-      entity_id: climate.woonkamer
+      entity_id: climate.living
       preset_mode: 'home'

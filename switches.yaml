@@ -6,11 +6,11 @@
       turn_on:
         service: script.turn_on_heating
         data:
-          climate: climate.woonkamer
+          climate: climate.living
       turn_off:
         service: script.turn_off_heating
         data:
-          climate: climate.woonkamer
+          climate: climate.living
 
     heating_kitchen:
       friendly_name: "Keuken"
@@ -18,11 +18,11 @@
       turn_on:
         service: script.turn_on_heating
         data:
-          climate: climate.keuken
+          climate: climate.kitchen
       turn_off:
         service: script.turn_off_heating
         data:
-          climate: climate.keuken
+          climate: climate.kitchen
 
     heating_bathroom:
       friendly_name: "Badkamer"
@@ -30,11 +30,11 @@
       turn_on:
         service: script.turn_on_heating
         data:
-          climate: climate.badkamer
+          climate: climate.bathroom
       turn_off:
         service: script.turn_off_heating
         data:
-          climate: climate.badkamer
+          climate: climate.bathroom
 
     heating_bedroom:
       friendly_name: "Slaapkamer"
@@ -42,11 +42,11 @@
       turn_on:
         service: script.turn_on_heating
         data:
-          climate: climate.slaapkamer
+          climate: climate.bedroom
       turn_off:
         service: script.turn_off_heating
         data:
-          climate: climate.slaapkamer
+          climate: climate.bedroom
 
     heating_office:
       friendly_name: "Kantoor"
@@ -54,11 +54,11 @@
       turn_on:
         service: script.turn_on_heating
         data:
-          climate: climate.kantoor
+          climate: climate.office
       turn_off:
         service: script.turn_off_heating
         data:
-          climate: climate.kantoor
+          climate: climate.office
 
     heating_guestroom:
       friendly_name: "Gastkamer"
@@ -66,11 +66,11 @@
       turn_on:
         service: script.turn_on_heating
         data:
-          climate: climate.gastenkamer
+          climate: climate.guestroom
       turn_off:
         service: script.turn_off_heating
         data:
-          climate: climate.gastenkamer
+          climate: climate.guestroom
 
     heating_storage:
       friendly_name: "Berging"
@@ -78,11 +78,11 @@
       turn_on:
         service: script.turn_on_heating
         data:
-          climate: climate.berging
+          climate: climate.storage
       turn_off:
         service: script.turn_off_heating
         data:
-          climate: climate.berging
+          climate: climate.storage
 
     litterbox_needs_cleaning:
       friendly_name: "Kattenbak is vuil"
