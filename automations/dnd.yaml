@@ -9,12 +9,12 @@
     state: 'home'
   action:
   - service: script.turn_on
-    entity_id: script.turn_everything_off
+    entity_id: script.reset_lights
 
 - alias: Disable Do Not Disturb
   trigger:
     platform: template
-    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.morning_alarm', 'timestamp') | int | timestamp_custom('%H:%M', false)) }}"
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.alarm', 'timestamp') | int | timestamp_custom('%H:%M', false)) }}"
   condition:
   - condition: state
     entity_id: input_boolean.do_not_disturb

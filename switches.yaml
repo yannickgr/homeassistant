@@ -2,85 +2,85 @@
   switches:
     heating_living:
       friendly_name: "Woonkamer"
-      value_template: "{{ (states('sensor.living_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      value_template: "{{ (states('sensor.living_set_temperature') | float) >= (states('input_number.heating_temp_comfort') | float) }}"
       turn_on:
-        service: script.turn_on_heating
+        service: script.heating_warm
         data:
           climate: climate.living
       turn_off:
-        service: script.turn_off_heating
+        service: script.heating_standby
         data:
           climate: climate.living
 
     heating_kitchen:
       friendly_name: "Keuken"
-      value_template: "{{ (states('sensor.kitchen_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      value_template: "{{ (states('sensor.kitchen_set_temperature') | float) >= (states('input_number.heating_temp_comfort') | float) }}"
       turn_on:
-        service: script.turn_on_heating
+        service: script.heating_warm
         data:
           climate: climate.kitchen
       turn_off:
-        service: script.turn_off_heating
+        service: script.heating_standby
         data:
           climate: climate.kitchen
 
     heating_bathroom:
       friendly_name: "Badkamer"
-      value_template: "{{ (states('sensor.bathroom_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      value_template: "{{ (states('sensor.bathroom_set_temperature') | float) >= (states('input_number.heating_temp_comfort') | float) }}"
       turn_on:
-        service: script.turn_on_heating
+        service: script.heating_warm
         data:
           climate: climate.bathroom
       turn_off:
-        service: script.turn_off_heating
+        service: script.heating_standby
         data:
           climate: climate.bathroom
 
     heating_bedroom:
       friendly_name: "Slaapkamer"
-      value_template: "{{ (states('sensor.bedroom_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      value_template: "{{ (states('sensor.bedroom_set_temperature') | float) >= (states('input_number.heating_temp_comfort') | float) }}"
       turn_on:
-        service: script.turn_on_heating
+        service: script.heating_warm
         data:
           climate: climate.bedroom
       turn_off:
-        service: script.turn_off_heating
+        service: script.heating_standby
         data:
           climate: climate.bedroom
 
     heating_office:
       friendly_name: "Kantoor"
-      value_template: "{{ (states('sensor.office_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      value_template: "{{ (states('sensor.office_set_temperature') | float) >= (states('input_number.heating_temp_comfort') | float) }}"
       turn_on:
-        service: script.turn_on_heating
+        service: script.heating_warm
         data:
           climate: climate.office
       turn_off:
-        service: script.turn_off_heating
+        service: script.heating_min
         data:
           climate: climate.office
 
     heating_guestroom:
       friendly_name: "Gastkamer"
-      value_template: "{{ (states('sensor.guestroom_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      value_template: "{{ (states('sensor.guestroom_set_temperature') | float) >= (states('input_number.heating_temp_comfort') | float) }}"
       turn_on:
-        service: script.turn_on_heating
+        service: script.heating_warm
         data:
           climate: climate.guestroom
       turn_off:
-        service: script.turn_off_heating
+        service: script.heating_min
         data:
           climate: climate.guestroom
 
     heating_storage:
       friendly_name: "Berging"
-      value_template: "{{ (states('sensor.guestroom_set_temperature') | float) > (states('input_number.heating_standby') | float) }}"
+      value_template: "{{ (states('sensor.guestroom_set_temperature') | float) >= (states('input_number.heating_temp_comfort') | float) }}"
       turn_on:
-        service: script.turn_on_heating
+        service: script.heating_warm
         data:
           climate: climate.storage
       turn_off:
-        service: script.turn_off_heating
+        service: script.heating_min
         data:
           climate: climate.storage
 

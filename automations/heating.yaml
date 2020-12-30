@@ -1,0 +1,84 @@
+- alias: Heating Phase Away or Sleeping
+  trigger:
+  - platform: state
+    entity_id: sensor.day_phase
+    to: 'Away'
+  - platform: state
+    entity_id: sensor.day_phase
+    to: 'Sleeping'
+  action:
+  - service: script.turn_on
+    entity_id: script.reset_heating
+
+- alias: Heating Phase Waking
+  trigger:
+  - platform: state
+    entity_id: sensor.day_phase
+    to: 'Waking'
+  action:
+  - service: script.heating_warm
+    data:
+      climate: climate.bathroom
+  - service: script.heating_comfort
+    data:
+      climate: climate.bedroom
+  - service: script.heating_comfort
+    data:
+      climate: climate.living
+  - service: script.heating_comfort
+    data:
+      climate: climate.kitchen
+
+- alias: Heating Phase Working
+  trigger:
+  - platform: state
+    entity_id: sensor.day_phase
+    to: 'Working'
+  action:
+  - service: script.heating_warm
+    data:
+      climate: climate.office
+  - service: script.heating_comfort
+    data:
+      climate: climate.bathroom
+  - service: script.heating_standby
+    data:
+      climate: climate.bedroom
+  - service: script.heating_standby
+    data:
+      climate: climate.living
+  - service: script.heating_standby
+    data:
+      climate: climate.kitchen
+
+- alias: Heating Phase Leisure
+  trigger:
+  - platform: state
+    entity_id: sensor.day_phase
+    to: 'Leisure'
+  action:
+  - service: script.heating_warm
+    data:
+      climate: climate.living
+  - service: script.heating_warm
+    data:
+      climate: climate.kitchen
+  - service: script.heating_comfort
+    data:
+      climate: climate.bathroom
+  - service: script.heating_min
+    data:
+      climate: climate.office
+
+- alias: Heating Phase Bedtime
+  trigger:
+  - platform: state
+    entity_id: sensor.day_phase
+    to: 'Bedtime'
+  action:
+  - service: script.heating_warm
+    data:
+      climate: climate.bathroom
+  - service: script.heating_comfort
+    data:
+      climate: climate.bedroom

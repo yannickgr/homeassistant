@@ -19,8 +19,8 @@ notify_mobile:
         push:
           sound: joi.wav
 
-turn_on_heating:
-  alias: Turn the Heating On for a Given Climate
+heating_warm:
+  alias: Turn the Heating to Warm for a Given Climate
   fields:
     climate:
       description: The climate
@@ -29,10 +29,10 @@ turn_on_heating:
   - service: climate.set_temperature
     data_template:
       entity_id: '{{ climate }}'
-      temperature: '{{ states(''input_number.heating_on'') | float }}'
+      temperature: '{{ states(''input_number.heating_temp_warm'') | float }}'
 
-turn_off_heating:
-  alias: Turn the Heating Off for a Given Climate
+heating_comfort:
+  alias: Turn the Heating to Comfortable for a Given Climate
   fields:
     climate:
       description: The climate
@@ -41,7 +41,31 @@ turn_off_heating:
   - service: climate.set_temperature
     data_template:
       entity_id: '{{ climate }}'
-      temperature: '{{ states(''input_number.heating_standby'') | float }}'
+      temperature: '{{ states(''input_number.heating_temp_comfort'') | float }}'
+
+heating_standby:
+  alias: Turn the Heating to Standby for a Given Climate
+  fields:
+    climate:
+      description: The climate
+      example: climate.kitchen
+  sequence:
+  - service: climate.set_temperature
+    data_template:
+      entity_id: '{{ climate }}'
+      temperature: '{{ states(''input_number.heating_temp_standby'') | float }}'
+
+heating_min:
+  alias: Turn the Heating to Minimum for a Given Climate
+  fields:
+    climate:
+      description: The climate
+      example: climate.kitchen
+  sequence:
+  - service: climate.set_temperature
+    data_template:
+      entity_id: '{{ climate }}'
+      temperature: '{{ states(''input_number.heating_temp_min'') | float }}'
 
 downstairs_cosy:
   alias: Downstairs Cosy Mode
@@ -102,22 +126,45 @@ clean_kitchen_aisle:
         - 29400
       repeats: 1
 
-turn_everything_off:
-  alias: Turn Everything Off
+reset_lights:
+  alias: Reset lights
   sequence:
   - service: light.turn_off
     entity_id: all
-  - service: script.turn_off_heating
-    data:
-      climate: climate.living
-  - service: script.turn_off_heating
-    data:
-      climate: climate.kitchen
-  - service: script.turn_off_heating
-    data:
-      climate: climate.bathroom
-  - service: script.turn_off_heating
-    data:
-      climate: climate.bedroom
   - service: input_boolean.turn_on
     entity_id: input_boolean.kitchen_motion_on
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.bathroom_motion_on
+
+reset_heating:
+  alias: Reset heating
+  sequence:
+  - service: script.heating_standby
+    data:
+      climate: climate.living
+  - service: script.heating_standby
+    data:
+      climate: climate.kitchen
+  - service: script.heating_standby
+    data:
+      climate: climate.bathroom
+  - service: script.heating_standby
+    data:
+      climate: climate.bedroom
+  - service: script.heating_min
+    data:
+      climate: climate.storage
+  - service: script.heating_min
+    data:
+      climate: climate.office
+  - service: script.heating_min
+    data:
+      climate: climate.guestroom
+
+reset_all:
+  alias: Reset all
+  sequence:
+  - service: script.turn_on
+    entity_id: script.reset_lights
+  - service: script.turn_on
+    entity_id: script.reset_heating

@@ -1,3 +1,9 @@
+- platform: time_date
+  display_options:
+    - 'time'
+    - 'date'
+    - 'date_time'
+
 - platform: template
   sensors:
     living_set_temperature:
@@ -28,8 +34,45 @@
       unit_of_measurement: '°'
       value_template: "{{ state_attr('climate.guestroom', 'temperature') }}"
 
-- platform: time_date
-  display_options:
-    - 'time'
-    - 'date'
-    - 'date_time'
+    alarm:
+      friendly_name: "Wekker vandaag"
+      value_template: >-
+        {% if is_state('input_boolean.vacation', 'on') or is_state('binary_sensor.workday_sensor', 'off')  %}
+          {{ states('input_datetime.alarm_dayoff') }}
+        {%- else -%}
+          {{ states('input_datetime.alarm_workday') }}
+        {% endif %}
+
+    bedtime:
+      friendly_name: "Bedtijd vandaag"
+      value_template: >-
+        {% if is_state('input_boolean.vacation', 'on') or is_state('binary_sensor.workday_sensor', 'off')  %}
+          {{ states('input_datetime.bedtime_dayoff') }}
+        {%- else -%}
+          {{ states('input_datetime.bedtime_workday') }}
+        {% endif %}
+
+    day_phase:
+      friendly_name: "Fase van de dag"
+      value_template: >-
+        {% if states.group.persons_all.state == "not_home" %}
+          Away
+        {% elif states.input_boolean.do_not_disturb.state == "on" %}
+          Sleeping
+        {% elif states.input_boolean.vacation.state == "on" or states.input_boolean.workday_sensor.state == "off" %}
+          {% if states.sensor.time.state < states.sensor.bedtime.state %}
+            Leisure
+          {% else %}
+            Bedtime
+          {% endif %}
+        {% else %}
+          {% if states.sensor.time.state < states.input_datetime.workday_start.state %}
+            Waking
+          {% elif states.sensor.time.state >= states.input_datetime.workday_start.state and states.sensor.time.state < states.input_datetime.workday_stop.state %}
+            Working
+          {% elif states.sensor.time.state >= states.input_datetime.workday_stop.state and states.sensor.time.state < states.sensor.bedtime.state %}
+            Leisure
+          {% else %}
+            Bedtime
+          {% endif %}
+        {% endif %}

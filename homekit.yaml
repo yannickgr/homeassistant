@@ -42,4 +42,6 @@ filter:
     - script.clean_around_litterbox
     - script.clean_kitchen_aisle
     - script.downstairs_cosy
-    - script.turn_everything_off
+    - script.reset_all
+    - script.reset_lights
+    - script.reset_heating
