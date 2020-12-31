@@ -14,7 +14,7 @@
 - alias: Disable Do Not Disturb
   trigger:
     platform: template
-    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.alarm', 'timestamp') | int | timestamp_custom('%H:%M', false)) }}"
+    value_template: "{{ states('sensor.time') == strptime(states.sensor.alarm.state, '%H:%M:%S').strftime('%H:%M') }}"
   condition:
   - condition: state
     entity_id: input_boolean.do_not_disturb
