@@ -59,7 +59,7 @@
           Away
         {% elif states.input_boolean.do_not_disturb.state == "on" %}
           Sleeping
-        {% elif states.input_boolean.vacation.state == "on" or states.input_boolean.workday_sensor.state == "off" %}
+        {% elif states.input_boolean.vacation.state == "on" or states.binary_sensor.workday_sensor.state == "off" %}
           {% if states.sensor.time.state < states.sensor.bedtime.state %}
             Leisure
           {% else %}
