@@ -24,15 +24,22 @@
     for:
       minutes: "{{ states('input_number.light_timeout_kitchen')|int }}"
   condition:
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
-  - condition: state
-    entity_id: binary_sensor.night
-    state: 'on'
-  - condition: state
-    entity_id: input_boolean.kitchen_motion_on
-    state: 'on'
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.do_not_disturb
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.night
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.kitchen_motion_on
+        state: 'on'
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: sensor.yannicks_iphone_room_presence
+            state: 'kitchen'
   action:
   - service: scene.turn_on
     entity_id: scene.kitchen_dim
@@ -45,15 +52,22 @@
     for:
       minutes: "{{ states('input_number.light_timeout_kitchen')|int }}"
   condition:
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
-  - condition: state
-    entity_id: binary_sensor.night
-    state: 'off'
-  - condition: state
-    entity_id: input_boolean.kitchen_motion_on
-    state: 'on'
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.do_not_disturb
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.night
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.kitchen_motion_on
+        state: 'on'
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: sensor.yannicks_iphone_room_presence
+            state: 'kitchen'
   action:
   - service: light.turn_off
     entity_id: light.kitchen
