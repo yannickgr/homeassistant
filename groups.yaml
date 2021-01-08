@@ -2,3 +2,9 @@ persons_all:
   name: All known people
   entities:
     - person.yannick
+
+roomassistant_devices_all:
+  name: All known roomassistant devices
+  entities:
+    - sensor.yannicks_iphone_room_presence
+    - sensor.yannick_s_macbook_pro_room_presence

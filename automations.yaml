@@ -139,22 +139,18 @@
     for:
       minutes: '{{ states(''input_number.light_timeout_kitchen'')|int }}'
   condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: input_boolean.do_not_disturb
-      state: 'off'
-    - condition: state
-      entity_id: binary_sensor.night
-      state: 'on'
-    - condition: state
-      entity_id: input_boolean.kitchen_motion_on
-      state: 'on'
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: sensor.yannicks_iphone_room_presence
-        state: kitchen
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.night
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.kitchen_motion_on
+    state: 'on'
+  - condition:
+    entity_id: binary_sensor.anyone_present_kitchen
+    state: 'off'
   action:
   - service: scene.turn_on
     entity_id: scene.kitchen_dim
@@ -167,27 +163,23 @@
     for:
       minutes: '{{ states(''input_number.light_timeout_kitchen'')|int }}'
   condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: input_boolean.do_not_disturb
-      state: 'off'
-    - condition: state
-      entity_id: binary_sensor.night
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.kitchen_motion_on
-      state: 'on'
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: sensor.yannicks_iphone_room_presence
-        state: kitchen
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.night
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.kitchen_motion_on
+    state: 'on'
+  - condition:
+    entity_id: binary_sensor.anyone_present_kitchen
+    state: 'off'
   action:
   - service: light.turn_off
     entity_id: light.kitchen
-- id: '1600000000011'
-  alias: Motion in Stairs
+- alias: Motion in Stairs
+  id: '1600000000011'
   trigger:
   - platform: state
     entity_id: binary_sensor.stairs_motion
@@ -680,12 +672,8 @@
   - platform: state
     entity_id: input_number.badge_count
   action:
-  - service: notify.mobile_app_yannicks_iphone
-    data_template:
-      message: delete_alert
-      data:
-        push:
-          badge: '{{ (states(''input_number.badge_count'') | int) }}'
+  - service: script.turn_on
+    entity_id: script.update_notification_badge
 - alias: Noone is Home
   id: '1600000000050'
   trigger:

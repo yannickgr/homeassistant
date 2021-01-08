@@ -6,3 +6,16 @@
   after: sunset
   after_offset: '-00:15:00'
   before: '07:00'
+
+- platform: template
+  sensors: 
+    anyone_present_kitchen:
+      friendly_name: "Is er iemand in de keuken"
+      value_template: >-
+        {% set result = namespace(value=false) %}
+        {%- for entity_id in states.group.roomassistant_devices_all.attributes.entity_id -%}
+          {%- if states(entity_id) == 'kitchen' %}
+            {% set result.value = true %}
+          {% endif -%}
+        {%- endfor %}
+        {{ result.value }}

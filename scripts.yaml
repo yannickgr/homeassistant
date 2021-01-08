@@ -19,6 +19,16 @@ notify_mobile:
         push:
           sound: joi.wav
 
+update_notification_badge:
+  alias: Update Notification Badge
+  sequence:
+  - service: notify.mobile_app_yannicks_iphone
+    data_template:
+      message: delete_alert
+      data:
+        push:
+          badge: '{{ (states(''input_number.badge_count'') | int) }}'
+
 heating_warm:
   alias: Turn the Heating to Warm for a Given Climate
   fields:
