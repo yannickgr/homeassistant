@@ -513,12 +513,24 @@
   action:
   - service: input_boolean.turn_off
     entity_id: input_boolean.do_not_disturb
-- alias: Heating Phase Away or Sleeping
+- alias: Heating Phase Away
   id: '1600000000038'
   trigger:
   - platform: state
     entity_id: sensor.day_phase
     to: Away
+    for:
+      minutes: '{{ states(''input_number.heating_auto_off_timeout'')|int }}'
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_auto_off
+    state: 'on'
+  action:
+  - service: script.turn_on
+    entity_id: script.reset_heating
+- alias: Heating Phase Sleeping
+  id: '1600000009142'
+  trigger:
   - platform: state
     entity_id: sensor.day_phase
     to: Sleeping
