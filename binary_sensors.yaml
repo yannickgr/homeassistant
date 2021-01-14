@@ -19,3 +19,55 @@
           {% endif -%}
         {%- endfor %}
         {{ result.value }}
+
+- platform: template
+  sensors: 
+    anyone_present_living:
+      friendly_name: "Is er iemand in de woonkamer"
+      value_template: >-
+        {% set result = namespace(value=false) %}
+        {%- for entity_id in states.group.roomassistant_devices_all.attributes.entity_id -%}
+          {%- if states(entity_id) == 'living' %}
+            {% set result.value = true %}
+          {% endif -%}
+        {%- endfor %}
+        {{ result.value }}
+
+- platform: template
+  sensors: 
+    anyone_present_bedroom:
+      friendly_name: "Is er iemand in de slaapkamer"
+      value_template: >-
+        {% set result = namespace(value=false) %}
+        {%- for entity_id in states.group.roomassistant_devices_all.attributes.entity_id -%}
+          {%- if states(entity_id) == 'bedroom' %}
+            {% set result.value = true %}
+          {% endif -%}
+        {%- endfor %}
+        {{ result.value }}
+
+- platform: template
+  sensors: 
+    anyone_present_bathroom:
+      friendly_name: "Is er iemand in de badkamer"
+      value_template: >-
+        {% set result = namespace(value=false) %}
+        {%- for entity_id in states.group.roomassistant_devices_all.attributes.entity_id -%}
+          {%- if states(entity_id) == 'bathroom' %}
+            {% set result.value = true %}
+          {% endif -%}
+        {%- endfor %}
+        {{ result.value }}
+
+- platform: template
+  sensors: 
+    anyone_present_office:
+      friendly_name: "Is er iemand in de bureau"
+      value_template: >-
+        {% set result = namespace(value=false) %}
+        {%- for entity_id in states.group.roomassistant_devices_all.attributes.entity_id -%}
+          {%- if states(entity_id) == 'office' %}
+            {% set result.value = true %}
+          {% endif -%}
+        {%- endfor %}
+        {{ result.value }}
