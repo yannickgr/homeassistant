@@ -110,9 +110,12 @@
     light.bedroom_spot:
       min_mireds: 140
       max_mireds: 650
+      brightness: 254
+      color_temp: 454
+      is_deconz_group: false
       friendly_name: bedroom_spot
       supported_features: 43
-      state: unavailable
+      state: 'on'
     light.bedroom_nightstands:
       min_mireds: 140
       max_mireds: 650
@@ -146,22 +149,10 @@
     light.bedroom_floor:
       effect_list:
       - colorloop
-      brightness: 254
-      hs_color:
-      - 54.839
-      - 36.471
-      rgb_color:
-      - 255
-      - 247
-      - 161
-      xy_color:
-      - 0.392
-      - 0.418
-      is_deconz_group: false
       friendly_name: Vloerlamp
       icon: mdi:floor-lamp
       supported_features: 61
-      state: 'on'
+      state: unavailable
 - id: '1577629582495'
   name: bathroom_bright
   entities:
@@ -388,22 +379,17 @@
     light.bedroom_floor:
       effect_list:
       - colorloop
-      brightness: 128
-      hs_color:
-      - 54.894
-      - 36.863
-      rgb_color:
-      - 255
-      - 247
-      - 160
-      xy_color:
-      - 0.393
-      - 0.419
-      is_deconz_group: false
       friendly_name: Vloerlamp
       icon: mdi:floor-lamp
       supported_features: 61
-      state: 'on'
+      state: unavailable
+    light.bedroom_spot:
+      min_mireds: 140
+      max_mireds: 650
+      is_deconz_group: false
+      friendly_name: bedroom_spot
+      supported_features: 43
+      state: 'off'
 - id: '1597166894933'
   name: living_dimmer
   entities:
