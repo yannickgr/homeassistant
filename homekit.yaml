@@ -30,6 +30,9 @@ filter:
     # Booleans
     - input_boolean.mailbox_mail
     - input_boolean.do_not_disturb
+    - input_boolean.vacation
+    - input_boolean.kitchen_motion_on
+    - input_boolean.bathroom_motion_on
 
     # Switches
     - switch.bathroom_fan
@@ -39,9 +42,17 @@ filter:
     - vacuum.portia
 
     # Scripts
-    - script.clean_around_litterbox
-    - script.clean_kitchen_aisle
     - script.downstairs_cosy
     - script.reset_all
     - script.reset_lights
     - script.reset_heating
+
+    # Sensors
+    - binary_sensor.storage_window
+    - binary_sensor.kitchen_window
+    - binary_sensor.dining_window
+    - binary_sensor.entry_door
+    - binary_sensor.workday_sensor
+    
+    # Presence
+    - person.yannick
