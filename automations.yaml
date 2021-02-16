@@ -1,60 +1,217 @@
-- alias: Motion in Bathroom During the Day
-  id: '1600000000001'
+- alias: General / Do Not Disturbed Enabled
+  id: '1600000000036'
   trigger:
   - platform: state
-    entity_id: binary_sensor.bathroom_motion
-    to: 'on'
-  condition:
-  - condition: template
-    value_template: '{{ (states(''sensor.bathroom_motion'') | float) < (states(''input_number.lux_treshold'')
-      | float) }}'
-  - condition: state
     entity_id: input_boolean.do_not_disturb
-    state: 'off'
-  - condition: state
-    entity_id: input_boolean.bathroom_motion_on
-    state: 'on'
-  action:
-  - service: scene.turn_on
-    entity_id: scene.bathroom_bright
-- alias: Motion in Bathroom at Night
-  id: '1600000000002'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.bathroom_motion
     to: 'on'
   condition:
-  - condition: template
-    value_template: '{{ (states(''sensor.bathroom_motion'') | float) < (states(''input_number.lux_treshold'')
-      | float) }}'
+  - condition: state
+    entity_id: group.persons_all
+    state: home
+  action:
+  - service: script.turn_on
+    entity_id: script.reset_lights
+- alias: General / Disable Do Not Disturb
+  id: '1600000000037'
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == strptime(states.sensor.alarm.state,
+      ''%H:%M:%S'').strftime(''%H:%M'') }}'
+  condition:
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'on'
-  - condition: state
-    entity_id: input_boolean.bathroom_motion_on
-    state: 'on'
   action:
-  - service: scene.turn_on
-    entity_id: scene.bathroom_dim
-- alias: No More Motion in Bathroom
-  id: '1600000000003'
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.do_not_disturb
+- alias: General / Heating Phase Away
+  id: '1600000000038'
   trigger:
   - platform: state
-    entity_id: binary_sensor.bathroom_motion
-    to: 'off'
+    entity_id: sensor.day_phase
+    to: Away
     for:
-      minutes: '{{ states(''input_number.light_timeout_bathroom'')|int }}'
+      minutes: '{{ states(''input_number.heating_auto_off_timeout'')|int }}'
   condition:
   - condition: state
-    entity_id: input_boolean.bathroom_motion_on
+    entity_id: input_boolean.heating_auto_off
     state: 'on'
-  - condition: state
-    entity_id: binary_sensor.anyone_present_bathroom
-    state: 'off'
+  action:
+  - service: script.turn_on
+    entity_id: script.reset_heating
+- alias: General / Heating Phase Sleeping
+  id: '1600000009142'
+  trigger:
+  - platform: state
+    entity_id: sensor.day_phase
+    to: Sleeping
+  action:
+  - service: script.turn_on
+    entity_id: script.reset_heating
+- alias: General / Heating Phase Waking
+  id: '1600000000039'
+  trigger:
+  - platform: state
+    entity_id: sensor.day_phase
+    to: Waking
+  action:
+  - service: script.heating_warm
+    data:
+      climate: climate.bathroom
+  - service: script.heating_comfort
+    data:
+      climate: climate.bedroom
+  - service: script.heating_comfort
+    data:
+      climate: climate.living
+  - service: script.heating_comfort
+    data:
+      climate: climate.kitchen
+- alias: General / Heating Phase Working
+  id: '1600000000040'
+  trigger:
+  - platform: state
+    entity_id: sensor.day_phase
+    to: Working
+  action:
+  - service: script.heating_warm
+    data:
+      climate: climate.office
+  - service: script.heating_comfort
+    data:
+      climate: climate.bathroom
+  - service: script.heating_standby
+    data:
+      climate: climate.bedroom
+  - service: script.heating_standby
+    data:
+      climate: climate.living
+  - service: script.heating_standby
+    data:
+      climate: climate.kitchen
+- alias: General / Heating Phase Leisure
+  id: '1600000000041'
+  trigger:
+  - platform: state
+    entity_id: sensor.day_phase
+    to: Leisure
+  action:
+  - service: script.heating_warm
+    data:
+      climate: climate.living
+  - service: script.heating_warm
+    data:
+      climate: climate.kitchen
+  - service: script.heating_comfort
+    data:
+      climate: climate.bathroom
+  - service: script.heating_min
+    data:
+      climate: climate.office
+- alias: General / Heating Phase Bedtime
+  id: '1600000000042'
+  trigger:
+  - platform: state
+    entity_id: sensor.day_phase
+    to: Bedtime
+  action:
+  - service: script.heating_warm
+    data:
+      climate: climate.bathroom
+  - service: script.heating_comfort
+    data:
+      climate: climate.bedroom
+- alias: General / Update Notification Badge
+  id: '1600000000049'
+  trigger:
+  - platform: state
+    entity_id: input_number.badge_count
+  action:
+  - service: script.turn_on
+    entity_id: script.update_notification_badge
+- alias: General / Noone is Home
+  id: '1600000000050'
+  trigger:
+  - platform: state
+    entity_id: group.persons_all
+    to: not_home
   action:
   - service: light.turn_off
-    entity_id: light.bathroom
-- alias: Motion in Entry
+    entity_id: light.bedroom
+  - service: light.turn_off
+    entity_id: light.office
+- alias: General / Light Theme After Sunrise
+  id: '1600000000055'
+  trigger:
+    platform: sun
+    event: sunrise
+  action:
+  - service: frontend.set_theme
+    data:
+      name: Google Light Theme
+- alias: General / Dark Theme After Sunset
+  id: '1600000000056'
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+  - service: frontend.set_theme
+    data:
+      name: Google Dark Theme
+- alias: General / Light Theme After Reboot in Day
+  id: '1600000000057'
+  trigger:
+    platform: homeassistant
+    event: start
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: above_horizon
+  action:
+    service: frontend.set_theme
+    data:
+      name: Google Light Theme
+- alias: General / Dark Theme After Reboot in Night
+  id: '1600000000058'
+  trigger:
+    platform: homeassistant
+    event: start
+  condition:
+    condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+    service: frontend.set_theme
+    data:
+      name: Google Dark Theme
+- alias: General / Raam/deur open beneden
+  id: '1611690560606'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.dining_window
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.entry_door
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.kitchen_window
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.storage_window
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_yannicks_iphone
+    data:
+      title: Raam/deur open!
+      message: Er is een raam of deur open beneden!
+  mode: single
+- alias: Entry / Motion in Entry
   id: '1600000000004'
   trigger:
   - platform: state
@@ -70,7 +227,7 @@
   action:
   - service: scene.turn_on
     entity_id: scene.entry_bright
-- alias: No More Motion in Entry in the Evening
+- alias: Entry / No More Motion in Entry in the Evening
   id: '1600000000005'
   trigger:
   - platform: state
@@ -88,7 +245,7 @@
   action:
   - service: scene.turn_on
     entity_id: scene.entry_dim
-- alias: No More Motion in Entry During the Day
+- alias: Entry / No More Motion in Entry During the Day
   id: '1600000000006'
   trigger:
   - platform: state
@@ -106,7 +263,7 @@
   action:
   - service: light.turn_off
     entity_id: light.entry
-- alias: Turn Entry Light Off
+- alias: Entry / Turn Entry Light Off
   id: '1600000000007'
   trigger:
     platform: time
@@ -114,7 +271,56 @@
   action:
   - service: light.turn_off
     entity_id: light.entry
-- alias: Motion in Kitchen
+- alias: Entry / Motion in Mailbox
+  id: '1600000000046'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.entry_mailbox
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.mailbox_mail
+    state: 'off'
+  action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.mailbox_mail
+- alias: Entry / There is Mail
+  id: '1600000000047'
+  trigger:
+  - platform: state
+    entity_id: input_boolean.mailbox_mail
+    to: 'on'
+  action:
+  - service: input_number.increment
+    entity_id: input_number.badge_count
+  - service: script.notify_mobile
+    data:
+      title: Brievenbus
+      message: 📬 Er is post
+      sound: new-mail.caf
+- alias: Entry / Mail Has Been Collected
+  id: '1600000000048'
+  trigger:
+  - platform: state
+    entity_id: input_boolean.mailbox_mail
+    to: 'off'
+  action:
+  - service: input_number.decrement
+    entity_id: input_number.badge_count
+- alias: Entry / Turn Entry Lights On Before Sunset
+  id: '1600000000054'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.night
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.entry_dim
+- alias: Kitchen / Motion in Kitchen
   id: '1600000000008'
   trigger:
   - platform: state
@@ -133,7 +339,7 @@
   action:
   - service: scene.turn_on
     entity_id: scene.kitchen_bright
-- alias: No More Motion in Kitchen in the Evening
+- alias: Kitchen / No More Motion in Kitchen in the Evening
   id: '1600000000009'
   trigger:
   - platform: state
@@ -157,7 +363,7 @@
   action:
   - service: scene.turn_on
     entity_id: scene.kitchen_dim
-- alias: No More Motion in Kitchen During the Day
+- alias: Kitchen / No More Motion in Kitchen During the Day
   id: '1600000000010'
   trigger:
   - platform: state
@@ -181,226 +387,7 @@
   action:
   - service: light.turn_off
     entity_id: light.kitchen
-- alias: Motion in Stairs
-  id: '1600000000011'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.stairs_motion
-    to: 'on'
-  condition:
-  - condition: template
-    value_template: '{{ (states(''sensor.stairs_motion'') | float) < (states(''input_number.lux_treshold'')
-      | float) }}'
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
-  action:
-  - service: scene.turn_on
-    entity_id: scene.stairs_bright
-  mode: single
-- alias: Motion in Stairs around Bedtime
-  id: '1600000000012'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.stairs_motion
-    to: 'on'
-  condition:
-  - condition: template
-    value_template: '{{ (states(''sensor.stairs_motion'') | float) < (states(''input_number.lux_treshold'')
-      | float) }}'
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
-  - condition: time
-    after: '21:00:00'
-    before: 04:00:00
-  action:
-  - service: scene.turn_on
-    entity_id: scene.bedroom_nightstands_bright
-- alias: No More Motion in Stairs
-  id: '1600000000013'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.stairs_motion
-    to: 'off'
-    for:
-      minutes: '{{ states(''input_number.light_timeout_hallways'')|int }}'
-  condition:
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
-  action:
-  - service: light.turn_off
-    entity_id: light.stairs
-- alias: Motion in Storage Room
-  id: '1600000000014'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.storage_motion
-    to: 'on'
-  condition:
-  - condition: template
-    value_template: '{{ (states(''sensor.storage_motion'') | float) < (states(''input_number.lux_treshold'')
-      | float) }}'
-  action:
-  - service: scene.turn_on
-    entity_id: scene.storage_bright
-- alias: No More Motion in Storage Room
-  id: '1600000000015'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.storage_motion
-    to: 'off'
-    for:
-      minutes: '{{ states(''input_number.light_timeout_storage'')|int }}'
-  action:
-  - service: light.turn_off
-    entity_id: light.storage
-- alias: Motion in Toilet
-  id: '1600000000016'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.toilet_motion
-    to: 'on'
-  action:
-  - service: scene.turn_on
-    entity_id: scene.toilet_bright
-- alias: No More Motion in Toilet
-  id: '1600000000017'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.toilet_motion
-    to: 'off'
-    for:
-      minutes: '{{ states(''input_number.light_timeout_toilet'')|int }}'
-  action:
-  - service: light.turn_off
-    entity_id: light.toilet
-- alias: Toggle Fan
-  id: '1600000000018'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bathroom_niko
-      event: 1000
-  action:
-  - service: switch.toggle
-    entity_id: switch.bathroom_fan
-- alias: Turn On Bath Mode
-  id: '1600000000019'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bathroom_niko
-      event: 2000
-  action:
-  - service: input_boolean.turn_off
-    entity_id: input_boolean.bathroom_motion_on
-  - service: light.turn_on
-    entity_id: light.bathroom
-    data_template:
-      hs_color:
-      - '{{ range(360)|random }}'
-      - '{{ range(80,101)|random }}'
-      brightness_pct: 100
-- alias: Turn On Bathroom Light
-  id: '1600000000020'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bathroom_niko
-      event: 3000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.bathroom_bright
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.bathroom_motion_on
-- alias: Turn Off Bathroom Light
-  id: '1600000000021'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bathroom_niko
-      event: 4000
-  action:
-  - service: light.turn_off
-    entity_id: light.bathroom
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.bathroom_motion_on
-- alias: Turn On Bedroom Nightstands
-  id: '1600000000022'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 1000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.bedroom_nightstands_bright
-- alias: Turn Off Bedroom Nightstands
-  id: '1600000000023'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 2000
-  action:
-  - service: light.turn_off
-    entity_id: light.bedroom
-- alias: Turn On Bedroom Spot
-  id: '1600000000024'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 3000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.bedroom_bright
-- alias: Turn Off Bedroom Spot
-  id: '1600000000025'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 4000
-  action:
-  - service: light.turn_off
-    entity_id: light.bedroom
-- alias: Start the night but light in the bedroom
-  id: '1600000000026'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 5000
-  action:
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.do_not_disturb
-  - delay: 00:00:01
-  - service: scene.turn_on
-    entity_id: scene.bedroom_nightstands_bright
-- alias: Start the night
-  id: '1600000000027'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 6000
-  action:
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.do_not_disturb
-- alias: Turn On Kitchen Light
+- alias: Kitchen / Turn On Kitchen Light
   id: '1600000000028'
   trigger:
     platform: event
@@ -411,7 +398,7 @@
   action:
   - service: scene.turn_on
     entity_id: scene.kitchen_bright
-- alias: Turn Off Kitchen Light
+- alias: Kitchen / Turn Off Kitchen Light
   id: '1600000000029'
   trigger:
     platform: event
@@ -422,7 +409,7 @@
   action:
   - service: light.turn_off
     entity_id: light.kitchen
-- alias: Turn On Dining Room Light
+- alias: Kitchen / Turn On Dining Room Light
   id: '1600000000030'
   trigger:
     platform: event
@@ -433,7 +420,7 @@
   action:
   - service: scene.turn_on
     entity_id: scene.dining_bright
-- alias: Turn Off Dining Room Light
+- alias: Kitchen / Turn Off Dining Room Light
   id: '1600000000031'
   trigger:
     platform: event
@@ -444,176 +431,7 @@
   action:
   - service: light.turn_off
     entity_id: light.dining
-- alias: Turn On Living Room Normal Light
-  id: '1600000000032'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: living_niko
-      event: 1000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.living_dim
-- alias: Turn Off Living Room Light
-  id: '1600000000033'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: living_niko
-      event: 2000
-  action:
-  - service: light.turn_off
-    entity_id: light.living
-  - service: media_player.media_stop
-    entity_id: media_player.living
-- alias: Turn On Living Room Bright Light
-  id: '1600000000034'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: living_niko
-      event: 3000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.living_bright
-- alias: Turn On Downstairs Cosy Mode
-  id: '1600000000035'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: living_niko
-      event: 4000
-  action:
-  - service: script.turn_on
-    entity_id: script.downstairs_cosy
-- alias: Do Not Disturbed Enabled
-  id: '1600000000036'
-  trigger:
-  - platform: state
-    entity_id: input_boolean.do_not_disturb
-    to: 'on'
-  condition:
-  - condition: state
-    entity_id: group.persons_all
-    state: home
-  action:
-  - service: script.turn_on
-    entity_id: script.reset_lights
-- alias: Disable Do Not Disturb
-  id: '1600000000037'
-  trigger:
-    platform: template
-    value_template: '{{ states(''sensor.time'') == strptime(states.sensor.alarm.state,
-      ''%H:%M:%S'').strftime(''%H:%M'') }}'
-  condition:
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'on'
-  action:
-  - service: input_boolean.turn_off
-    entity_id: input_boolean.do_not_disturb
-- alias: Heating Phase Away
-  id: '1600000000038'
-  trigger:
-  - platform: state
-    entity_id: sensor.day_phase
-    to: Away
-    for:
-      minutes: '{{ states(''input_number.heating_auto_off_timeout'')|int }}'
-  condition:
-  - condition: state
-    entity_id: input_boolean.heating_auto_off
-    state: 'on'
-  action:
-  - service: script.turn_on
-    entity_id: script.reset_heating
-- alias: Heating Phase Sleeping
-  id: '1600000009142'
-  trigger:
-  - platform: state
-    entity_id: sensor.day_phase
-    to: Sleeping
-  action:
-  - service: script.turn_on
-    entity_id: script.reset_heating
-- alias: Heating Phase Waking
-  id: '1600000000039'
-  trigger:
-  - platform: state
-    entity_id: sensor.day_phase
-    to: Waking
-  action:
-  - service: script.heating_warm
-    data:
-      climate: climate.bathroom
-  - service: script.heating_comfort
-    data:
-      climate: climate.bedroom
-  - service: script.heating_comfort
-    data:
-      climate: climate.living
-  - service: script.heating_comfort
-    data:
-      climate: climate.kitchen
-- alias: Heating Phase Working
-  id: '1600000000040'
-  trigger:
-  - platform: state
-    entity_id: sensor.day_phase
-    to: Working
-  action:
-  - service: script.heating_warm
-    data:
-      climate: climate.office
-  - service: script.heating_comfort
-    data:
-      climate: climate.bathroom
-  - service: script.heating_standby
-    data:
-      climate: climate.bedroom
-  - service: script.heating_standby
-    data:
-      climate: climate.living
-  - service: script.heating_standby
-    data:
-      climate: climate.kitchen
-- alias: Heating Phase Leisure
-  id: '1600000000041'
-  trigger:
-  - platform: state
-    entity_id: sensor.day_phase
-    to: Leisure
-  action:
-  - service: script.heating_warm
-    data:
-      climate: climate.living
-  - service: script.heating_warm
-    data:
-      climate: climate.kitchen
-  - service: script.heating_comfort
-    data:
-      climate: climate.bathroom
-  - service: script.heating_min
-    data:
-      climate: climate.office
-- alias: Heating Phase Bedtime
-  id: '1600000000042'
-  trigger:
-  - platform: state
-    entity_id: sensor.day_phase
-    to: Bedtime
-  action:
-  - service: script.heating_warm
-    data:
-      climate: climate.bathroom
-  - service: script.heating_comfort
-    data:
-      climate: climate.bedroom
-- alias: Motion in Litterbox
+- alias: Kitchen / Motion in Litterbox
   id: '1600000000043'
   trigger:
   - platform: state
@@ -622,7 +440,7 @@
   action:
   - service: input_number.increment
     entity_id: input_number.litterbox_visits
-- alias: Litterbox Needs Cleaning
+- alias: Kitchen / Litterbox Needs Cleaning
   id: '1600000000044'
   trigger:
   - platform: state
@@ -636,7 +454,7 @@
       title: Kattenbak
       message: 🐈 De kattenbak is vuil
       sound: meow.wav
-- alias: Litterbox No Longer Needs Cleaning
+- alias: Kitchen / Litterbox No Longer Needs Cleaning
   id: '1600000000045'
   trigger:
   - platform: state
@@ -645,62 +463,199 @@
   action:
   - service: input_number.decrement
     entity_id: input_number.badge_count
-- alias: Motion in Mailbox
-  id: '1600000000046'
+- alias: Kitchen / Turn Kitchen Lights On Before Sunset
+  id: '1600000000053'
   trigger:
   - platform: state
-    entity_id: binary_sensor.entry_mailbox
+    entity_id: binary_sensor.night
     to: 'on'
   condition:
   - condition: state
-    entity_id: input_boolean.mailbox_mail
+    entity_id: light.kitchen
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
     state: 'off'
   action:
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.mailbox_mail
-- alias: There is Mail
-  id: '1600000000047'
+  - service: scene.turn_on
+    entity_id: scene.kitchen_dim
+- alias: Kitchen / Keuken schakelaar knop 1
+  id: '1611688779034'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: kitchen_switch
+      event: 1002
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.kitchen
+  mode: single
+- alias: Kitchen / Keuken schakelaar knop 2
+  id: '1611688836759'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: kitchen_switch
+      event: 2002
+  condition: []
+  action:
+  - scene: scene.kitchen_bright
+  mode: single
+- alias: Kitchen / Eetkamer schakelaar knop 1
+  id: '1611688924641'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: dining_switch
+      event: 1002
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.dining
+  mode: single
+- alias: Kitchen / Eetkamer schakelaar knop 2
+  id: '1611688966112'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: dining_switch
+      event: 2002
+  condition: []
+  action:
+  - scene: scene.dining_bright
+  mode: single
+- alias: Storage / Motion in Storage Room
+  id: '1600000000014'
   trigger:
   - platform: state
-    entity_id: input_boolean.mailbox_mail
+    entity_id: binary_sensor.storage_motion
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ (states(''sensor.storage_motion'') | float) < (states(''input_number.lux_treshold'')
+      | float) }}'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.storage_bright
+- alias: Storage / No More Motion in Storage Room
+  id: '1600000000015'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.storage_motion
+    to: 'off'
+    for:
+      minutes: '{{ states(''input_number.light_timeout_storage'')|int }}'
+  action:
+  - service: light.turn_off
+    entity_id: light.storage
+- alias: Storage / Motion in Toilet
+  id: '1600000000016'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.toilet_motion
     to: 'on'
   action:
-  - service: input_number.increment
-    entity_id: input_number.badge_count
-  - service: script.notify_mobile
-    data:
-      title: Brievenbus
-      message: 📬 Er is post
-      sound: new-mail.caf
-- alias: Mail Has Been Collected
-  id: '1600000000048'
+  - service: scene.turn_on
+    entity_id: scene.toilet_bright
+- alias: Storage / No More Motion in Toilet
+  id: '1600000000017'
   trigger:
   - platform: state
-    entity_id: input_boolean.mailbox_mail
+    entity_id: binary_sensor.toilet_motion
     to: 'off'
+    for:
+      minutes: '{{ states(''input_number.light_timeout_toilet'')|int }}'
   action:
-  - service: input_number.decrement
-    entity_id: input_number.badge_count
-- alias: Update Notification Badge
-  id: '1600000000049'
+  - service: light.turn_off
+    entity_id: light.toilet
+- alias: Storage / Berging schakelaar
+  id: '1611678243314'
+  description: ''
   trigger:
-  - platform: state
-    entity_id: input_number.badge_count
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: storage_switch
+      event: 1002
+  condition: []
+  action:
+  - service: light.toggle
+    data: {}
+    entity_id: light.storage
+  mode: single
+- alias: Storage / Wc schakelaar
+  id: '1611678539269'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: toilet_switch
+      event: 1002
+  condition: []
+  action:
+  - service: light.toggle
+    data: {}
+    entity_id: light.toilet
+  mode: single
+- alias: Living / Turn On Living Room Normal Light
+  id: '1600000000032'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_niko
+      event: 1000
+  action:
+  - service: scene.turn_on
+    entity_id: scene.living_dim
+- alias: Living / Turn Off Living Room Light
+  id: '1600000000033'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_niko
+      event: 2000
+  action:
+  - service: light.turn_off
+    entity_id: light.living
+  - service: media_player.media_stop
+    entity_id: media_player.living
+- alias: Living / Turn On Living Room Bright Light
+  id: '1600000000034'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_niko
+      event: 3000
+  action:
+  - service: scene.turn_on
+    entity_id: scene.living_bright
+- alias: Living / Turn On Downstairs Cosy Mode
+  id: '1600000000035'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_niko
+      event: 4000
   action:
   - service: script.turn_on
-    entity_id: script.update_notification_badge
-- alias: Noone is Home
-  id: '1600000000050'
-  trigger:
-  - platform: state
-    entity_id: group.persons_all
-    to: not_home
-  action:
-  - service: light.turn_off
-    entity_id: light.bedroom
-  - service: light.turn_off
-    entity_id: light.office
-- alias: Turn Living Lights On Before Sunset When Noone is Home
+    entity_id: script.downstairs_cosy
+- alias: Living / Turn Living Lights On Before Sunset When Noone is Home
   id: '1600000000051'
   trigger:
   - platform: state
@@ -719,7 +674,7 @@
   action:
   - service: scene.turn_on
     entity_id: scene.living_dim
-- alias: Turn Living Lights On Before Sunset When Someone is Home
+- alias: Living / Turn Living Lights On Before Sunset When Someone is Home
   id: '1600000000052'
   trigger:
   - platform: state
@@ -738,76 +693,401 @@
   action:
   - service: scene.turn_on
     entity_id: scene.living_cosy
-- alias: Turn Kitchen Lights On Before Sunset
-  id: '1600000000053'
+- alias: Living / Woonkamer schakelaar links knop 1
+  id: '1611688375462'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_switch_left
+      event: 1002
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.living
+  mode: single
+- alias: Living / Woonkamer schakelaar links knop 2
+  id: '1611688434189'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_switch_left
+      event: 2002
+  condition: []
+  action:
+  - scene: scene.living_standby
+  mode: single
+- alias: Living / Woonkamer schakelaar rechts knop 1
+  id: '1611688506408'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_switch_right
+      event: 1002
+  condition: []
+  action:
+  - scene: scene.living_cosy
+  mode: single
+- alias: Living / Woonkamer schakelaar rechts knop 2
+  id: '1611688554467'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: living_switch_right
+      event: 2002
+  condition: []
+  action:
+  - scene: scene.living_bright
+  mode: single
+- alias: Bathroom / Motion / Motion during the day
+  id: '1600000000001'
   trigger:
   - platform: state
-    entity_id: binary_sensor.night
+    entity_id: binary_sensor.bathroom_motion
     to: 'on'
   condition:
+  - condition: template
+    value_template: '{{ (states(''sensor.bathroom_motion'') | float) < (states(''input_number.lux_treshold'')
+      | float) }}'
   - condition: state
-    entity_id: light.kitchen
+    entity_id: input_boolean.do_not_disturb
     state: 'off'
+  - condition: state
+    entity_id: input_boolean.bathroom_motion_on
+    state: 'on'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.bathroom_bright
+- alias: Bathroom / Motion / Motion at night
+  id: '1600000000002'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bathroom_motion
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ (states(''sensor.bathroom_motion'') | float) < (states(''input_number.lux_treshold'')
+      | float) }}'
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.bathroom_motion_on
+    state: 'on'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.bathroom_dim
+- alias: Bathroom / Motion / No more motion
+  id: '1600000000003'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bathroom_motion
+    to: 'off'
+    for:
+      minutes: '{{ states(''input_number.light_timeout_bathroom'')|int }}'
+  condition:
+  - condition: state
+    entity_id: input_boolean.bathroom_motion_on
+    state: 'on'
+  - condition: state
+    entity_id: binary_sensor.anyone_present_bathroom
+    state: 'off'
+  action:
+  - service: light.turn_off
+    entity_id: light.bathroom
+- alias: Bathroom / Toggle Fan
+  id: '1600000000018'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bathroom_niko
+      event: 1000
+  action:
+  - service: switch.toggle
+    entity_id: switch.bathroom_fan
+- alias: Bathroom / Turn On Bath Mode
+  id: '1600000000019'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bathroom_niko
+      event: 2000
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.bathroom_motion_on
+  - service: light.turn_on
+    entity_id: light.bathroom
+    data_template:
+      hs_color:
+      - '{{ range(360)|random }}'
+      - '{{ range(80,101)|random }}'
+      brightness_pct: 100
+- alias: Bathroom / Turn On Bathroom Light
+  id: '1600000000020'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bathroom_niko
+      event: 3000
+  action:
+  - service: scene.turn_on
+    entity_id: scene.bathroom_bright
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.bathroom_motion_on
+- alias: Bathroom / Turn Off Bathroom Light
+  id: '1600000000021'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bathroom_niko
+      event: 4000
+  action:
+  - service: light.turn_off
+    entity_id: light.bathroom
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.bathroom_motion_on
+- alias: Bedroom / Turn On Bedroom Nightstands
+  id: '1600000000022'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_niko
+      event: 1000
+  action:
+  - service: scene.turn_on
+    entity_id: scene.bedroom_nightstands_bright
+- alias: Bedroom / Turn Off Bedroom Nightstands
+  id: '1600000000023'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_niko
+      event: 2000
+  action:
+  - service: light.turn_off
+    entity_id: light.bedroom
+- alias: Bedroom / Turn On Bedroom Spot
+  id: '1600000000024'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_niko
+      event: 3000
+  action:
+  - service: scene.turn_on
+    entity_id: scene.bedroom_bright
+- alias: Bedroom / Turn Off Bedroom Spot
+  id: '1600000000025'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_niko
+      event: 4000
+  action:
+  - service: light.turn_off
+    entity_id: light.bedroom
+- alias: Bedroom / Start the night but light in the bedroom
+  id: '1600000000026'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_niko
+      event: 5000
+  action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.do_not_disturb
+  - delay: 00:00:01
+  - service: scene.turn_on
+    entity_id: scene.bedroom_nightstands_bright
+- alias: Bedroom / Start the night
+  id: '1600000000027'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_niko
+      event: 6000
+  action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.do_not_disturb
+- alias: Stairs / Motion in Stairs
+  id: '1600000000011'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.stairs_motion
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ (states(''sensor.stairs_motion'') | float) < (states(''input_number.lux_treshold'')
+      | float) }}'
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
   action:
   - service: scene.turn_on
-    entity_id: scene.kitchen_dim
-- alias: Turn Entry Lights On Before Sunset
-  id: '1600000000054'
+    entity_id: scene.stairs_bright
+  mode: single
+- alias: Stairs / Motion in Stairs around Bedtime
+  id: '1600000000012'
   trigger:
   - platform: state
-    entity_id: binary_sensor.night
+    entity_id: binary_sensor.stairs_motion
     to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ (states(''sensor.stairs_motion'') | float) < (states(''input_number.lux_treshold'')
+      | float) }}'
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  - condition: time
+    after: '21:00:00'
+    before: 04:00:00
+  action:
+  - service: scene.turn_on
+    entity_id: scene.bedroom_nightstands_bright
+- alias: Stairs / No More Motion in Stairs
+  id: '1600000000013'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.stairs_motion
+    to: 'off'
+    for:
+      minutes: '{{ states(''input_number.light_timeout_hallways'')|int }}'
   condition:
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
   action:
-  - service: scene.turn_on
-    entity_id: scene.entry_dim
-- alias: Light Theme After Sunrise
-  id: '1600000000055'
+  - service: light.turn_off
+    entity_id: light.stairs
+- id: '1613241935540'
+  alias: Bathroom / Switch / Stairs
+  description: ''
   trigger:
-    platform: sun
-    event: sunrise
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: stairs_bathroom_switch
+      event: 1002
+  condition: []
   action:
-  - service: frontend.set_theme
-    data:
-      name: Google Light Theme
-- alias: Dark Theme After Sunset
-  id: '1600000000056'
+  - service: light.toggle
+    data: {}
+    entity_id: light.bathroom
+  mode: single
+- id: '1613242182486'
+  alias: Bedroom / Switch / Stairs
+  description: ''
   trigger:
-    platform: sun
-    event: sunset
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: stairs_bedroom_switch
+      event: 1002
+  condition: []
   action:
-  - service: frontend.set_theme
-    data:
-      name: Google Dark Theme
-- alias: Light Theme After Reboot in Day
-  id: '1600000000057'
+  - service: light.toggle
+    data: {}
+    entity_id: light.bedroom
+  mode: single
+- id: '1613242186786'
+  alias: Bedroom / Switch / Stairs
+  description: ''
   trigger:
-    platform: homeassistant
-    event: start
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: stairs_bedroom_switch
+      event: 1002
+  condition: []
+  action:
+  - service: light.toggle
+    data: {}
+    entity_id: light.bedroom
+  mode: single
+- id: '1613255688311'
+  alias: Bedroom / Switch / Left on
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_switch
+      event: 1002
   condition:
   - condition: state
-    entity_id: sun.sun
-    state: above_horizon
+    entity_id: light.bedroom
+    state: 'off'
   action:
-    service: frontend.set_theme
-    data:
-      name: Google Light Theme
-- alias: Dark Theme After Reboot in Night
-  id: '1600000000058'
+  - scene: scene.bedroom_nightstands_bright
+  mode: single
+- id: '1613256038440'
+  alias: Bedroom / Switch / Left off
+  description: ''
   trigger:
-    platform: homeassistant
-    event: start
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_switch
+      event: 1002
   condition:
-    condition: state
-    entity_id: sun.sun
-    state: below_horizon
+  - condition: state
+    entity_id: light.bedroom
+    state: 'on'
   action:
-    service: frontend.set_theme
-    data:
-      name: Google Dark Theme
+  - service: light.turn_off
+    data: {}
+    entity_id: light.bedroom
+  mode: single
+- id: '1613256313125'
+  alias: Bedroom / Switch / Right on
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_switch
+      event: 2002
+  condition:
+  - condition: state
+    entity_id: light.bedroom
+    state: 'off'
+  action:
+  - scene: scene.bedroom_bright
+  mode: single
+- id: '1613256617132'
+  alias: Bedroom / Switch / Right off
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_switch
+      event: 2002
+  condition:
+  - condition: state
+    entity_id: light.bedroom
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.bedroom
+  mode: single
