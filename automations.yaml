@@ -1091,3 +1091,38 @@
     data: {}
     entity_id: light.bedroom
   mode: single
+- id: '1613670861996'
+  alias: Office / Motion / Motion in stairs
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.office_stairs_motion
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ (states(''sensor.office_stairs_motion'') | float) < 20 }}'
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data: {}
+    entity_id: light.office_stairs
+  mode: single
+- id: '1613671011510'
+  alias: Office / Motion / No more motion
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.office_stairs_motion
+    to: 'off'
+    for: 0:{{ states('input_number.light_timeout_hallways')|int }}:00
+  condition:
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.office_stairs
+  mode: single
