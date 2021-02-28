@@ -56,3 +56,7 @@ filter:
     
     # Presence
     - person.yannick
+
+    # Cameras
+    - camera.entry
+    - camera.garden
