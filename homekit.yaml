@@ -60,3 +60,4 @@ filter:
     # Cameras
     - camera.entry
     - camera.garden
+    - camera.voordeur
