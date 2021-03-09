@@ -33,10 +33,18 @@ filter:
     - input_boolean.vacation
     - input_boolean.kitchen_motion_on
     - input_boolean.bathroom_motion_on
+    - input_boolean.heating_auto_off
 
     # Switches
     - switch.bathroom_fan
     - switch.litterbox_needs_cleaning
+    - switch.heating_living
+    - switch.heating_kitchen
+    - switch.heating_bathroom
+    - switch.heating_bedroom
+    - switch.heating_office
+    - switch.heating_guestroom
+    - switch.heating_storage
 
     # Vacuums
     - vacuum.portia
@@ -48,6 +56,9 @@ filter:
     - script.reset_heating
 
     # Sensors
+    - sensor.voordeur_battery
+
+    # Binary sensors
     - binary_sensor.storage_window
     - binary_sensor.kitchen_window
     - binary_sensor.dining_window
