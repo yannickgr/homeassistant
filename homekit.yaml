@@ -72,3 +72,11 @@ filter:
     - camera.entry
     - camera.garden
     - camera.voordeur
+
+entity_config:
+  camera.entry:
+    video_codec: copy
+  camera.garden:
+    video_codec: copy
+  camera.voordeur:
+    video_codec: copy
