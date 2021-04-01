@@ -858,6 +858,21 @@
     entity_id: light.bathroom
   - service: input_boolean.turn_on
     entity_id: input_boolean.bathroom_motion_on
+- alias: Bathroom / Switch / Stairs
+  id: '1613241935540'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: stairs_bathroom_switch
+      event: 1002
+  condition: []
+  action:
+  - service: light.toggle
+    data: {}
+    entity_id: light.bathroom
+  mode: single
 - alias: Bedroom / Turn On Bedroom Nightstands
   id: '1600000000022'
   trigger:
@@ -927,6 +942,89 @@
   action:
   - service: input_boolean.turn_on
     entity_id: input_boolean.do_not_disturb
+- alias: Bedroom / Switch / Stairs
+  id: '1613242186786'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: stairs_bedroom_switch
+      event: 1002
+  condition: []
+  action:
+  - service: light.toggle
+    data: {}
+    entity_id: light.bedroom
+  mode: single
+- alias: Bedroom / Switch / Left on
+  id: '1613255688311'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_switch
+      event: 1002
+  condition:
+  - condition: state
+    entity_id: light.bedroom
+    state: 'off'
+  action:
+  - scene: scene.bedroom_nightstands_bright
+  mode: single
+- alias: Bedroom / Switch / Left off
+  id: '1613256038440'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_switch
+      event: 1002
+  condition:
+  - condition: state
+    entity_id: light.bedroom
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.bedroom
+  mode: single
+- alias: Bedroom / Switch / Right on
+  id: '1613256313125'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_switch
+      event: 2002
+  condition:
+  - condition: state
+    entity_id: light.bedroom
+    state: 'off'
+  action:
+  - scene: scene.bedroom_bright
+  mode: single
+- alias: Bedroom / Switch / Right off
+  id: '1613256617132'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: bedroom_switch
+      event: 2002
+  condition:
+  - condition: state
+    entity_id: light.bedroom
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.bedroom
+  mode: single
 - alias: Stairs / Motion in Stairs
   id: '1600000000011'
   trigger:
@@ -978,121 +1076,8 @@
   action:
   - service: light.turn_off
     entity_id: light.stairs
-- id: '1613241935540'
-  alias: Bathroom / Switch / Stairs
-  description: ''
-  trigger:
-  - platform: event
-    event_type: deconz_event
-    event_data:
-      id: stairs_bathroom_switch
-      event: 1002
-  condition: []
-  action:
-  - service: light.toggle
-    data: {}
-    entity_id: light.bathroom
-  mode: single
-- id: '1613242182486'
-  alias: Bedroom / Switch / Stairs
-  description: ''
-  trigger:
-  - platform: event
-    event_type: deconz_event
-    event_data:
-      id: stairs_bedroom_switch
-      event: 1002
-  condition: []
-  action:
-  - service: light.toggle
-    data: {}
-    entity_id: light.bedroom
-  mode: single
-- id: '1613242186786'
-  alias: Bedroom / Switch / Stairs
-  description: ''
-  trigger:
-  - platform: event
-    event_type: deconz_event
-    event_data:
-      id: stairs_bedroom_switch
-      event: 1002
-  condition: []
-  action:
-  - service: light.toggle
-    data: {}
-    entity_id: light.bedroom
-  mode: single
-- id: '1613255688311'
-  alias: Bedroom / Switch / Left on
-  description: ''
-  trigger:
-  - platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_switch
-      event: 1002
-  condition:
-  - condition: state
-    entity_id: light.bedroom
-    state: 'off'
-  action:
-  - scene: scene.bedroom_nightstands_bright
-  mode: single
-- id: '1613256038440'
-  alias: Bedroom / Switch / Left off
-  description: ''
-  trigger:
-  - platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_switch
-      event: 1002
-  condition:
-  - condition: state
-    entity_id: light.bedroom
-    state: 'on'
-  action:
-  - service: light.turn_off
-    data: {}
-    entity_id: light.bedroom
-  mode: single
-- id: '1613256313125'
-  alias: Bedroom / Switch / Right on
-  description: ''
-  trigger:
-  - platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_switch
-      event: 2002
-  condition:
-  - condition: state
-    entity_id: light.bedroom
-    state: 'off'
-  action:
-  - scene: scene.bedroom_bright
-  mode: single
-- id: '1613256617132'
-  alias: Bedroom / Switch / Right off
-  description: ''
-  trigger:
-  - platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_switch
-      event: 2002
-  condition:
-  - condition: state
-    entity_id: light.bedroom
-    state: 'on'
-  action:
-  - service: light.turn_off
-    data: {}
-    entity_id: light.bedroom
-  mode: single
-- id: '1613670861996'
-  alias: Office / Motion / Motion in stairs
+- alias: Office / Motion / Motion in stairs
+  id: '1613670861996'
   description: ''
   trigger:
   - platform: state
@@ -1109,8 +1094,8 @@
     data: {}
     entity_id: light.office_stairs
   mode: single
-- id: '1613671011510'
-  alias: Office / Motion / No more motion
+- alias: Office / Motion / No more motion
+  id: '1613671011510'
   description: ''
   trigger:
   - platform: state
