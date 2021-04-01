@@ -510,12 +510,10 @@
     light.living_spot_2:
       min_mireds: 140
       max_mireds: 650
-      brightness: 128
-      color_temp: 454
       is_deconz_group: false
       friendly_name: living_spot_2
       supported_features: 43
-      state: 'on'
+      state: 'off'
     light.living_wall_1:
       brightness: 64
       is_deconz_group: false
