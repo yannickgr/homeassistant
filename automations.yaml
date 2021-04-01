@@ -293,11 +293,11 @@
   action:
   - service: input_number.increment
     entity_id: input_number.badge_count
-  - service: script.notify_mobile
-    data:
-      title: Brievenbus
-      message: 📬 Er is post
-      sound: new-mail.caf
+  # - service: script.notify_mobile
+  #   data:
+  #     title: Brievenbus
+  #     message: 📬 Er is post
+  #     sound: new-mail.caf
 - alias: Entry / Mail Has Been Collected
   id: '1600000000048'
   trigger:
@@ -449,11 +449,11 @@
   action:
   - service: input_number.increment
     entity_id: input_number.badge_count
-  - service: script.notify_mobile
-    data:
-      title: Kattenbak
-      message: 🐈 De kattenbak is vuil
-      sound: meow.wav
+  # - service: script.notify_mobile
+  #   data:
+  #     title: Kattenbak
+  #     message: 🐈 De kattenbak is vuil
+  #     sound: meow.wav
 - alias: Kitchen / Litterbox No Longer Needs Cleaning
   id: '1600000000045'
   trigger:
