@@ -76,3 +76,13 @@
             Bedtime
           {% endif %}
         {% endif %}
+
+- platform: command_line
+  name: Photos last backup
+  command: !secret command_photosbackup
+  value_template: "{{ strptime(value, '%d/%m/%y_%H:%M:%S') }}"
+
+- platform: command_line
+  name: Mail last backup
+  command: !secret command_mailbackup
+  value_template: "{{ strptime(value, '%d/%m/%y_%H:%M:%S') }}"
