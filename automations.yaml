@@ -293,11 +293,11 @@
   action:
   - service: input_number.increment
     entity_id: input_number.badge_count
-  # - service: script.notify_mobile
-  #   data:
-  #     title: Brievenbus
-  #     message: 📬 Er is post
-  #     sound: new-mail.caf
+  - service: script.notify_mobile
+    data:
+      title: Brievenbus
+      message: 📬 Er is post
+      sound: new-mail.caf
 - alias: Entry / Mail Has Been Collected
   id: '1600000000048'
   trigger:
@@ -449,11 +449,11 @@
   action:
   - service: input_number.increment
     entity_id: input_number.badge_count
-  # - service: script.notify_mobile
-  #   data:
-  #     title: Kattenbak
-  #     message: 🐈 De kattenbak is vuil
-  #     sound: meow.wav
+  - service: script.notify_mobile
+    data:
+      title: Kattenbak
+      message: 🐈 De kattenbak is vuil
+      sound: meow.wav
 - alias: Kitchen / Litterbox No Longer Needs Cleaning
   id: '1600000000045'
   trigger:
@@ -655,8 +655,8 @@
   action:
   - service: script.turn_on
     entity_id: script.downstairs_cosy
-- alias: Living / Turn Living Lights On Before Sunset When Noone is Home
-  id: '1600000000051'
+- id: '1600000000051'
+  alias: Living / Turn Living Lights On Before Sunset When Noone is Home
   trigger:
   - platform: state
     entity_id: binary_sensor.night
@@ -673,7 +673,8 @@
     state: not_home
   action:
   - service: scene.turn_on
-    entity_id: scene.living_dim
+    entity_id: scene.living_cosy
+  mode: single
 - alias: Living / Turn Living Lights On Before Sunset When Someone is Home
   id: '1600000000052'
   trigger:
