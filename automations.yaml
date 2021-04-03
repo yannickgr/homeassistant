@@ -206,7 +206,7 @@
     to: 'on'
   condition: []
   action:
-  - service: notify.mobile_app_yannicks_iphone
+  - service: script.notify_mobile
     data:
       title: Raam/deur open!
       message: Er is een raam of deur open beneden!
@@ -655,8 +655,8 @@
   action:
   - service: script.turn_on
     entity_id: script.downstairs_cosy
-- id: '1600000000051'
-  alias: Living / Turn Living Lights On Before Sunset When Noone is Home
+- alias: Living / Turn Living Lights On Before Sunset When Noone is Home
+  id: '1600000000051'
   trigger:
   - platform: state
     entity_id: binary_sensor.night
