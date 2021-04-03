@@ -74,6 +74,10 @@ filter:
     - camera.garden
     - camera.voordeur
 
+    # Media players
+    - media_player.keuken
+    - media_player.woonkamer
+
 entity_config:
   camera.entry:
     video_codec: copy
