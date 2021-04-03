@@ -51,6 +51,7 @@ filter:
 
     # Scripts
     - script.downstairs_cosy
+    - script.downstairs_music
     - script.reset_all
     - script.reset_lights
     - script.reset_heating

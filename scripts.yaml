@@ -86,6 +86,26 @@ downstairs_cosy:
     entity_id: input_boolean.kitchen_motion_on
   mode: single
 
+downstairs_music:
+  alias: Play music downstairs
+  sequence:
+  - service: sonos.join
+    entity_id: media_player.keuken
+    data:
+      master: media_player.woonkamer
+  - service: media_player.volume_set
+    entity_id: media_player.woonkamer
+    data:
+      volume_level: 0.07
+  - service: media_player.select_source
+    entity_id: media_player.woonkamer
+    data:
+      source: Home Alternative
+  - service: media_player.shuffle_set
+    entity_id: media_player.woonkamer
+    data:
+      shuffle: true
+
 clean_around_litterbox:
   alias: Clean Around the Litterbox
   sequence:
