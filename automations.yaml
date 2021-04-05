@@ -148,7 +148,7 @@
   action:
   - service: frontend.set_theme
     data:
-      name: Google Light Theme
+      name: Light
 - alias: General / Dark Theme After Sunset
   id: '1600000000056'
   trigger:
@@ -157,7 +157,7 @@
   action:
   - service: frontend.set_theme
     data:
-      name: Google Dark Theme
+      name: Dark
 - alias: General / Light Theme After Reboot in Day
   id: '1600000000057'
   trigger:
@@ -170,7 +170,7 @@
   action:
     service: frontend.set_theme
     data:
-      name: Google Light Theme
+      name: Light
 - alias: General / Dark Theme After Reboot in Night
   id: '1600000000058'
   trigger:
@@ -183,7 +183,7 @@
   action:
     service: frontend.set_theme
     data:
-      name: Google Dark Theme
+      name: Dark
 - alias: General / Raam/deur open beneden
   id: '1611690560606'
   description: ''
