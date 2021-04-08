@@ -10,6 +10,12 @@ notify_mobile:
     sound:
       description: The name of the sound
       example: default
+    category:
+      description: The category of the notification
+      example: ALARM
+    entity_id:
+      description: a related entity
+      example: light.office
   sequence:
   - service: notify.mobile_app_yannicks_iphone
     data_template:
@@ -18,6 +24,9 @@ notify_mobile:
       data:
         push:
           sound: '{{ states(''input_text.notification_sound'') }}'
+          category: '{{ category }}'
+        action_data:
+          entity_id: '{{ entity_id }}'
 
 update_notification_badge:
   alias: Update Notification Badge

@@ -14,3 +14,4 @@ tts: !include tts.yaml
 asuswrt: !include asuswrt.yaml
 homekit: !include homekit.yaml
 camera: !include cameras.yaml
+ios: !include ios.yaml

@@ -1,0 +1,26 @@
+push:
+  categories:
+    - name: Task
+      identifier: 'TASK'
+      actions:
+        - identifier: 'MARK_COMPLETE'
+          title: 'Markeer als voltooid'
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: false
+          behavior: 'default'
+    - name: Alarm
+      identifier: 'ALARM'
+      actions:
+        - identifier: 'TRIGGER_ALARM'
+          title: 'Alarm luiden'
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: true
+          behavior: 'default'
+        - identifier: 'IGNORE'
+          title: 'Negeren'
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: false
+          behavior: 'default'

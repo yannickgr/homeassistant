@@ -210,6 +210,7 @@
     data:
       title: Raam/deur open!
       message: Er is een raam of deur open beneden!
+      category: ALARM
   mode: single
 - alias: Entry / Motion in Entry
   id: '1600000000004'
@@ -298,6 +299,8 @@
       title: Brievenbus
       message: 📬 Er is post
       sound: new-mail.caf
+      category: TASK
+      entity_id: input_boolean.mailbox_mail
 - alias: Entry / Mail Has Been Collected
   id: '1600000000048'
   trigger:
@@ -454,6 +457,8 @@
       title: Kattenbak
       message: 🐈 De kattenbak is vuil
       sound: meow.wav
+      category: TASK
+      entity_id: switch.litterbox_needs_cleaning
 - alias: Kitchen / Litterbox No Longer Needs Cleaning
   id: '1600000000045'
   trigger:
@@ -1111,4 +1116,33 @@
   - service: light.turn_off
     data: {}
     entity_id: light.office_stairs
+  mode: single
+- alias: Notification actions / Mark as complete
+  id: '1617881831320'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: MARK_COMPLETE
+  condition: []
+  action:
+  - service: homeassistant.turn_off
+    data_template:
+      entity_id: '{{ trigger.event.data.action_data[''entity_id''] }}'
+  mode: single
+- alias: Notification actions / Alarm
+  id: '1617991831321'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: TRIGGER_ALARM
+  condition: []
+  action:
+  - service: tts.google_translate_say
+    entity_id: "all"
+    data:
+      message: "This is an alarm."
   mode: single
