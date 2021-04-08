@@ -17,7 +17,7 @@ notify_mobile:
       message: '{{ message }}'
       data:
         push:
-          sound: 3rdParty_Success_Haptic.caf
+          sound: '{{ states(''input_text.notification_sound'') }}'
 
 update_notification_badge:
   alias: Update Notification Badge
