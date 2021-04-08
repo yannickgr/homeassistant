@@ -1,0 +1,21 @@
+- platform: generic
+  still_image_url: !secret camera_url_entry_still
+  stream_source: !secret camera_url_entry_stream
+  name: entry
+
+- platform: generic
+  still_image_url: !secret camera_url_garden_still
+  stream_source: !secret camera_url_garden_stream
+  name: garden
+
+- platform: xiaomi_cloud_map_extractor
+  name: Vacuum map
+  host: !secret vacuum_roborock_ip
+  token: !secret vacuum_roborock_token
+  username: !secret vacuum_roborock_username
+  password: !secret vacuum_roborock_password
+  draw: ['all']
+  colors:
+    color_map_outside: [0, 0, 0]
+  attributes:
+    - calibration_points 
