@@ -206,7 +206,7 @@
     to: 'on'
   condition: []
   action:
-  - service: script.notify_mobile
+  - service: script.notify_all
     data:
       title: Raam/deur open!
       message: Er is een raam of deur open beneden!
@@ -294,7 +294,7 @@
   action:
   - service: input_number.increment
     entity_id: input_number.badge_count
-  - service: script.notify_mobile
+  - service: script.notify_all
     data:
       title: Brievenbus
       message: 📬 Er is post
@@ -452,7 +452,7 @@
   action:
   - service: input_number.increment
     entity_id: input_number.badge_count
-  - service: script.notify_mobile
+  - service: script.notify_all
     data:
       title: Kattenbak
       message: 🐈 De kattenbak is vuil
@@ -1146,3 +1146,33 @@
     data:
       message: "This is an alarm."
   mode: single
+- alias: Actions / Downstairs music
+  id: '1617241838322'
+  trigger:
+  - platform: event
+    event_type: ios.action_fired
+    event_data:
+      actionName: 'downstairs_music'
+  action:
+  - service: script.turn_on
+    entity_id: script.downstairs_music
+- alias: Actions / Downstairs cosy
+  id: '1617241338382'
+  trigger:
+  - platform: event
+    event_type: ios.action_fired
+    event_data:
+      actionName: 'downstairs_cosy'
+  action:
+  - service: script.turn_on
+    entity_id: script.downstairs_cosy
+- alias: Actions / Downstairs warmer
+  id: '1617241317389'
+  trigger:
+  - platform: event
+    event_type: ios.action_fired
+    event_data:
+      actionName: 'downstairs_warm'
+  action:
+  - service: script.turn_on
+    entity_id: script.downstairs_warmer

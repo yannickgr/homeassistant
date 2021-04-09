@@ -1,0 +1,5 @@
+- platform: group
+  name: all_devices
+  services:
+  - service: mobile_app_yannick_s_macbook_pro
+  - service: mobile_app_yannicks_iphone

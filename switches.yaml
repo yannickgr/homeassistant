@@ -88,7 +88,7 @@
       friendly_name: "Kattenbak is vuil"
       value_template: "{{ (states('input_number.litterbox_visits') | int) > (states('input_number.litterbox_visits_max') | int) }}"
       turn_on:
-        service: script.notify_mobile
+        service: script.notify_all
         data:
           title: "Kattenbak"
           message: "🐈 De kattenbak is vuil"

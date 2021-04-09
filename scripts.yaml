@@ -1,4 +1,4 @@
-notify_mobile:
+notify_all:
   alias: Send a Notification to the Mobile Devices
   fields:
     title:
@@ -17,7 +17,7 @@ notify_mobile:
       description: a related entity
       example: light.office
   sequence:
-  - service: notify.mobile_app_yannicks_iphone
+  - service: notify.all_devices
     data_template:
       title: '{{ title }}'
       message: '{{ message }}'
@@ -114,6 +114,18 @@ downstairs_music:
     entity_id: media_player.woonkamer
     data:
       shuffle: true
+
+downstairs_warmer:
+  alias: Warmer downstairs
+  sequence:
+  - service: climate.set_temperature
+    data:
+      entity_id: climate.living
+      temperature: 22
+  - service: climate.set_temperature
+    data:
+      entity_id: climate.kitchen
+      temperature: 22
 
 clean_around_litterbox:
   alias: Clean Around the Litterbox

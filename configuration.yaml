@@ -14,3 +14,4 @@ tts: !include tts.yaml
 asuswrt: !include asuswrt.yaml
 camera: !include cameras.yaml
 ios: !include ios.yaml
+notify: !include notify.yaml
