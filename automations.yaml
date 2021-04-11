@@ -212,6 +212,20 @@
       message: Er is een raam of deur open beneden!
       category: ALARM
   mode: single
+- alias: General / Circuit B fails
+  id: '1618151193652'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: light.bathroom_mirror
+    to: unavailable
+  condition: []
+  action:
+  - service: script.notify_all_critical
+    data:
+      message: Kring B
+      title: Kring is uitgevallen
+  mode: single
 - alias: Entry / Motion in Entry
   id: '1600000000004'
   trigger:
@@ -1142,9 +1156,9 @@
   condition: []
   action:
   - service: tts.google_translate_say
-    entity_id: "all"
+    entity_id: all
     data:
-      message: "This is an alarm."
+      message: This is an alarm.
   mode: single
 - alias: Actions / Downstairs music
   id: '1617241838322'
@@ -1152,7 +1166,7 @@
   - platform: event
     event_type: ios.action_fired
     event_data:
-      actionName: 'downstairs_music'
+      actionName: downstairs_music
   action:
   - service: script.turn_on
     entity_id: script.downstairs_music
@@ -1162,7 +1176,7 @@
   - platform: event
     event_type: ios.action_fired
     event_data:
-      actionName: 'downstairs_cosy'
+      actionName: downstairs_cosy
   action:
   - service: script.turn_on
     entity_id: script.downstairs_cosy
@@ -1172,7 +1186,7 @@
   - platform: event
     event_type: ios.action_fired
     event_data:
-      actionName: 'downstairs_warm'
+      actionName: downstairs_warm
   action:
   - service: script.turn_on
     entity_id: script.downstairs_warmer

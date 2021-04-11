@@ -28,6 +28,27 @@ notify_all:
         action_data:
           entity_id: '{{ entity_id }}'
 
+notify_all_critical:
+  alias: Send a Critical Notification to the Mobile Devices
+  fields:
+    title:
+      description: Title of the notification
+      example: This is a title!
+    message:
+      description: The body text of the notification
+      example: This is a message!
+  sequence:
+  - service: notify.all_devices
+    data_template:
+      title: '{{ title }}'
+      message: '{{ message }}'
+      data:
+        push:
+          sound:
+            name: '{{ states(''input_text.notification_sound_critical'') }}'
+            critical: 1
+            volume: 0.5
+
 update_notification_badge:
   alias: Update Notification Badge
   sequence:
