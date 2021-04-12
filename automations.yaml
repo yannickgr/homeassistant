@@ -1213,7 +1213,7 @@
   - service: homeassistant.turn_off
     entity_id: switch.litterbox_needs_cleaning
 - alias: Actions / Mail collected
-  id: '1694634318488'
+  id: '1594634284478'
   trigger:
   - platform: event
     event_type: ios.action_fired
