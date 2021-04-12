@@ -1190,3 +1190,35 @@
   action:
   - service: script.turn_on
     entity_id: script.downstairs_warmer
+- alias: Actions / Do not disturb
+  id: '1694241312388'
+  trigger:
+  - platform: event
+    event_type: ios.action_fired
+    event_data:
+      actionName: do_not_disturb
+  action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.do_not_disturb
+  - service: script.turn_on
+    entity_id: script.reset_lights
+- alias: Actions / Litterbox cleaned
+  id: '1694634318488'
+  trigger:
+  - platform: event
+    event_type: ios.action_fired
+    event_data:
+      actionName: litterbox_cleaned
+  action:
+  - service: homeassistant.turn_off
+    entity_id: switch.litterbox_needs_cleaning
+- alias: Actions / Mail collected
+  id: '1694634318488'
+  trigger:
+  - platform: event
+    event_type: ios.action_fired
+    event_data:
+      actionName: mail_collected
+  action:
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.mailbox_mail
