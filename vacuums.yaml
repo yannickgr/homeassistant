@@ -1,4 +1,0 @@
-- platform: xiaomi_miio
-  host: !secret vacuum_roborock_ip
-  token: !secret vacuum_roborock_token
-  name: Portia

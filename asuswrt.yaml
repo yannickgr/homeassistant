@@ -1,9 +1,0 @@
-host: !secret ip_router
-username: !secret asus_wrt_username
-password: !secret asus_wrt_password
-sensors:
-  - devices
-  - upload
-  - download
-  - upload_speed
-  - download_speed
