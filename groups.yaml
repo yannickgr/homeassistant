@@ -2,6 +2,7 @@ persons_all:
   name: All known people
   entities:
     - person.yannick
+    - person.guest
 
 roomassistant_devices_all:
   name: All known roomassistant devices
