@@ -1222,3 +1222,18 @@
   action:
   - service: homeassistant.turn_off
     entity_id: input_boolean.mailbox_mail
+- alias: Maintenance / Autoclean
+  id: '1581451984479'
+  trigger:
+    platform: template
+    value_template: '{{ states.sensor.time.state == strptime(states.input_datetime.vacuum_autoclean.state, ''%H:%M:%S'').strftime(''%H:%M'') }}'
+  condition:
+  - condition: state
+    entity_id: sensor.day_phase
+    state: 'Working'
+  - condition: state
+    entity_id: input_boolean.vacuum_autoclean
+    state: 'on'
+  action:
+  - service: vacuum.start
+    entity_id: vacuum.portia
