@@ -10,6 +10,5 @@ switch: !include switches.yaml
 sensor: !include sensors.yaml
 binary_sensor: !include binary_sensors.yaml
 tts: !include tts.yaml
-camera: !include cameras.yaml
 ios: !include ios.yaml
 notify: !include notify.yaml
