@@ -3,9 +3,6 @@
 # Whitelist
 !*.yaml
 !.gitignore
-!automations/
-!automations/sensors
-!automations/switches
 !themes
 
 # Ignored
