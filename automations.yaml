@@ -184,16 +184,12 @@
     service: frontend.set_theme
     data:
       name: Dark
-- alias: General / Raam of deur open beneden
+- alias: General / Raam open beneden
   id: '1611690560606'
   description: ''
   trigger:
   - platform: state
     entity_id: binary_sensor.dining_window
-    from: 'off'
-    to: 'on'
-  - platform: state
-    entity_id: binary_sensor.entry_door
     from: 'off'
     to: 'on'
   - platform: state
@@ -211,8 +207,8 @@
   action:
   - service: script.notify_all_critical
     data:
-      message: Deur of raam geopend!
-      title: Er is niemand thuis en er is een deur of raam geopend
+      message: Raam beneden geopend!
+      title: Er is niemand thuis en er is een raam beneden geopend
   mode: single
 - alias: General / Circuit B fails
   id: '1618151193652'
