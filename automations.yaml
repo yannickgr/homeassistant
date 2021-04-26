@@ -372,9 +372,6 @@
   - condition: state
     entity_id: input_boolean.kitchen_motion_on
     state: 'on'
-  - condition: state
-    entity_id: binary_sensor.anyone_present_kitchen
-    state: 'off'
   action:
   - service: scene.turn_on
     entity_id: scene.kitchen_dim
@@ -396,9 +393,6 @@
   - condition: state
     entity_id: input_boolean.kitchen_motion_on
     state: 'on'
-  - condition: state
-    entity_id: binary_sensor.anyone_present_kitchen
-    state: 'off'
   action:
   - service: light.turn_off
     entity_id: light.kitchen
@@ -815,9 +809,6 @@
   - condition: state
     entity_id: input_boolean.bathroom_motion_on
     state: 'on'
-  - condition: state
-    entity_id: binary_sensor.anyone_present_bathroom
-    state: 'off'
   action:
   - service: light.turn_off
     entity_id: light.bathroom
