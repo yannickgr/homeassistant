@@ -224,6 +224,18 @@
       message: Kring B
       title: Kring is uitgevallen
   mode: single
+- alias: General / Home Assistant started
+  id: '1618159315659'
+  trigger:
+    platform: event
+    event_type: homeassistant_start
+  action:
+  - service: script.notify_all
+    data:
+      title: Home Assistant
+      message: 🖥 Home Assistant is opgestart
+      category: INFO
+  mode: single
 - alias: Entry / Motion in Entry
   id: '1600000000004'
   trigger:
@@ -1226,3 +1238,17 @@
   action:
   - service: vacuum.start
     entity_id: vacuum.portia
+- alias: Maintenance / Laundry timer finished
+  id: '1514859195622'
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.laundry
+  action:
+  - service: script.notify_all
+    data:
+      title: Wasmachine
+      message: 🧺 De wasmachine is klaar
+      category: INFO
+  mode: single

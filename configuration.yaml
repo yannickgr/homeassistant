@@ -12,3 +12,4 @@ binary_sensor: !include binary_sensors.yaml
 tts: !include tts.yaml
 ios: !include ios.yaml
 notify: !include notify.yaml
+timer: !include timers.yaml
