@@ -4,6 +4,8 @@
     - 'date'
     - 'date_time'
 
+- platform: uptime
+
 - platform: template
   sensors:
     living_set_temperature:
