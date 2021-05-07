@@ -428,6 +428,9 @@
     light.living_floor:
       min_mireds: 153
       max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
       brightness: 128
       color_temp: 454
       is_deconz_group: false
@@ -438,6 +441,8 @@
     light.living_spot_1:
       min_mireds: 140
       max_mireds: 650
+      supported_color_modes:
+      - color_temp
       is_deconz_group: false
       friendly_name: living_spot_1
       supported_features: 43
@@ -445,19 +450,25 @@
     light.living_spot_2:
       min_mireds: 140
       max_mireds: 650
-      brightness: 128
-      color_temp: 454
+      supported_color_modes:
+      - color_temp
       is_deconz_group: false
       friendly_name: living_spot_2
       supported_features: 43
-      state: 'on'
+      state: 'off'
     light.living_wall_1:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
       brightness: 64
       is_deconz_group: false
       friendly_name: living_wall_1
       supported_features: 41
       state: 'on'
     light.living_wall_2:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
       brightness: 64
       is_deconz_group: false
       friendly_name: living_wall_2
@@ -468,11 +479,15 @@
       max_mireds: 500
       effect_list:
       - colorloop
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
       brightness: 111
       color_temp: 454
       is_deconz_group: true
       all_on: true
       friendly_name: Tafel
+      icon: mdi:lightbulb-multiple
       supported_features: 47
       state: 'on'
     light.kitchen:
@@ -480,11 +495,15 @@
       max_mireds: 500
       effect_list:
       - colorloop
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
       brightness: 178
       color_temp: 454
       is_deconz_group: true
       all_on: true
       friendly_name: Eiland
+      icon: mdi:lightbulb-multiple
       supported_features: 47
       state: 'on'
 - id: '1609158274332'
