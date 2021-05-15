@@ -78,13 +78,19 @@
             Bedtime
           {% endif %}
         {% endif %}
+    
+    photos_last_backup:
+      value_template: "{{ strptime(states.sensor.command_photosbackup.state, '%d/%m/%y_%H:%M:%S_%z').strftime('%Y-%m-%dT%H:%M:%S%z') }}"
+      device_class: timestamp
+
+    mail_last_backup:
+      value_template: "{{ strptime(states.sensor.command_mailbackup.state, '%d/%m/%y_%H:%M:%S_%z').strftime('%Y-%m-%dT%H:%M:%S%z') }}"
+      device_class: timestamp
 
 - platform: command_line
-  name: Photos last backup
+  name: command_photosbackup
   command: !secret command_photosbackup
-  value_template: "{{ strptime(value, '%d/%m/%y_%H:%M:%S') }}"
 
 - platform: command_line
-  name: Mail last backup
+  name: command_mailbackup
   command: !secret command_mailbackup
-  value_template: "{{ strptime(value, '%d/%m/%y_%H:%M:%S') }}"
