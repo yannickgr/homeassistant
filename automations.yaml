@@ -408,50 +408,6 @@
   action:
   - service: light.turn_off
     entity_id: light.kitchen
-- alias: Kitchen / Turn On Kitchen Light
-  id: '1600000000028'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: kitchen_niko
-      event: 1000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.kitchen_bright
-- alias: Kitchen / Turn Off Kitchen Light
-  id: '1600000000029'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: kitchen_niko
-      event: 2000
-  action:
-  - service: light.turn_off
-    entity_id: light.kitchen
-- alias: Kitchen / Turn On Dining Room Light
-  id: '1600000000030'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: kitchen_niko
-      event: 3000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.dining_bright
-- alias: Kitchen / Turn Off Dining Room Light
-  id: '1600000000031'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: kitchen_niko
-      event: 4000
-  action:
-  - service: light.turn_off
-    entity_id: light.dining
 - alias: Kitchen / Motion in Litterbox
   id: '1600000000043'
   trigger:
@@ -632,52 +588,6 @@
     data: {}
     entity_id: light.toilet
   mode: single
-- alias: Living / Turn On Living Room Normal Light
-  id: '1600000000032'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: living_niko
-      event: 1000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.living_dim
-- alias: Living / Turn Off Living Room Light
-  id: '1600000000033'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: living_niko
-      event: 2000
-  action:
-  - service: light.turn_off
-    entity_id: light.living
-  - service: media_player.media_stop
-    entity_id: media_player.living
-- alias: Living / Turn On Living Room Bright Light
-  id: '1600000000034'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: living_niko
-      event: 3000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.living_bright
-- alias: Living / Turn On Downstairs Cosy Mode
-  id: '1600000000035'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: living_niko
-      event: 4000
-  action:
-  - service: script.turn_on
-    entity_id: script.downstairs_cosy
 - alias: Living / Turn Living Lights On Before Sunset When Noone is Home
   id: '1600000000051'
   trigger:
@@ -824,62 +734,7 @@
   action:
   - service: light.turn_off
     entity_id: light.bathroom
-- alias: Bathroom / Toggle Fan
-  id: '1600000000018'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bathroom_niko
-      event: 1000
-  action:
-  - service: switch.toggle
-    entity_id: switch.bathroom_fan
-- alias: Bathroom / Turn On Bath Mode
-  id: '1600000000019'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bathroom_niko
-      event: 2000
-  action:
-  - service: input_boolean.turn_off
-    entity_id: input_boolean.bathroom_motion_on
-  - service: light.turn_on
-    entity_id: light.bathroom
-    data_template:
-      hs_color:
-      - '{{ range(360)|random }}'
-      - '{{ range(80,101)|random }}'
-      brightness_pct: 100
-- alias: Bathroom / Turn On Bathroom Light
-  id: '1600000000020'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bathroom_niko
-      event: 3000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.bathroom_bright
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.bathroom_motion_on
-- alias: Bathroom / Turn Off Bathroom Light
-  id: '1600000000021'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bathroom_niko
-      event: 4000
-  action:
-  - service: light.turn_off
-    entity_id: light.bathroom
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.bathroom_motion_on
-- alias: Bathroom / Switch / Stairs
+- alias: Bathroom / Switch / Stairs on
   id: '1613241935540'
   description: ''
   trigger:
@@ -888,81 +743,35 @@
     event_data:
       id: stairs_bathroom_switch
       event: 1002
-  condition: []
-  action:
-  - service: light.toggle
-    data: {}
+  condition:
+  - condition: state
     entity_id: light.bathroom
+    state: 'off'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.bathroom_bright
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.bathroom_motion_on
   mode: single
-- alias: Bedroom / Turn On Bedroom Nightstands
-  id: '1600000000022'
+- alias: Bathroom / Switch / Stairs off
+  id: '1619689935572'
+  description: ''
   trigger:
-    platform: event
+  - platform: event
     event_type: deconz_event
     event_data:
-      id: bedroom_niko
-      event: 1000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.bedroom_nightstands_bright
-- alias: Bedroom / Turn Off Bedroom Nightstands
-  id: '1600000000023'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 2000
+      id: stairs_bathroom_switch
+      event: 1002
+  condition:
+  - condition: state
+    entity_id: light.bathroom
+    state: 'on'
   action:
   - service: light.turn_off
-    entity_id: light.bedroom
-- alias: Bedroom / Turn On Bedroom Spot
-  id: '1600000000024'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 3000
-  action:
-  - service: scene.turn_on
-    entity_id: scene.bedroom_bright
-- alias: Bedroom / Turn Off Bedroom Spot
-  id: '1600000000025'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 4000
-  action:
-  - service: light.turn_off
-    entity_id: light.bedroom
-- alias: Bedroom / Start the night but light in the bedroom
-  id: '1600000000026'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 5000
-  action:
+    entity_id: light.bathroom
   - service: input_boolean.turn_on
-    entity_id: input_boolean.do_not_disturb
-  - delay: 00:00:01
-  - service: scene.turn_on
-    entity_id: scene.bedroom_nightstands_bright
-- alias: Bedroom / Start the night
-  id: '1600000000027'
-  trigger:
-    platform: event
-    event_type: deconz_event
-    event_data:
-      id: bedroom_niko
-      event: 6000
-  action:
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.do_not_disturb
+    entity_id: input_boolean.bathroom_motion_on
+  mode: single
 - alias: Bedroom / Switch / Stairs
   id: '1613242186786'
   description: ''
