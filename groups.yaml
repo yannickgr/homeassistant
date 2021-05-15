@@ -3,3 +3,9 @@ persons_all:
   entities:
     - person.yannick
     - person.guest
+
+climate_downstairs:
+  name: Leefruimte
+  entities:
+    - climate.kitchen
+    - climate.living
