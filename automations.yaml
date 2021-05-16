@@ -224,6 +224,20 @@
       message: Kring B
       title: Kring is uitgevallen
   mode: single
+- alias: General / UPS on battery
+  id: '1611109193372'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.ups_status_data
+    to: 'OB DISCHRG'
+  condition: []
+  action:
+  - service: script.notify_all_critical
+    data:
+      message: UPS is op batterij aan het werken
+      title: UPS
+  mode: single
 - alias: General / Home Assistant started
   id: '1618159315659'
   trigger:
