@@ -240,3 +240,43 @@ reset_all:
     entity_id: script.reset_lights
   - service: script.turn_on
     entity_id: script.reset_heating
+
+reset_vacuum_main_brush_left:
+  alias: "Reset hours for vacuum main brush replacement"
+  sequence:
+    - service: vacuum.send_Command
+      target:
+        entity_id: vacuum.portia
+      data:
+        command: reset_consumable
+        params: ['main_brush_work_time']
+
+reset_vacuum_side_brush_left:
+  alias: "Reset hours for vacuum side brush replacement"
+  sequence:
+    - service: vacuum.send_Command
+      target:
+        entity_id: vacuum.portia
+      data:
+        command: reset_consumable
+        params: ['side_brush_work_time']
+
+reset_vacuum_filter_left:
+  alias: "Reset hours for vacuum filter replacement"
+  sequence:
+    - service: vacuum.send_Command
+      target:
+        entity_id: vacuum.portia
+      data:
+        command: reset_consumable
+        params: ['filter_work_time']
+
+reset_vacuum_sensor_left:
+  alias: "Reset hours for vacuum sensor cleaning"
+  sequence:
+    - service: vacuum.send_Command
+      target:
+        entity_id: vacuum.portia
+      data:
+        command: reset_consumable
+        params: ['sensor_dirty_time']
