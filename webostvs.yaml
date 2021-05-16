@@ -1,0 +1,2 @@
+- name: TV woonkamer
+  host: !secret webostv_livingroom_ip

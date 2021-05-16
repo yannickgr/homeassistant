@@ -3,3 +3,4 @@
   services:
   - service: mobile_app_yannick_s_macbook_pro
   - service: mobile_app_yannicks_iphone
+  - service: tv_woonkamer
