@@ -87,6 +87,30 @@
       value_template: "{{ strptime(states.sensor.command_mailbackup.state, '%d/%m/%y_%H:%M:%S_%z').strftime('%Y-%m-%dT%H:%M:%S%z') }}"
       device_class: timestamp
 
+    vacuum_battery_level:
+      value_template: "{{ state_attr('vacuum.portia', 'battery_level') }}"
+      device_class: battery
+      unit_of_measurement: '%'
+
+    vacuum_main_brush_left:
+      value_template: "{{ state_attr('vacuum.portia', 'main_brush_left') }}"
+      unit_of_measurement: 'uren'
+    
+    vacuum_side_brush_left:
+      value_template: "{{ state_attr('vacuum.portia', 'side_brush_left') }}"
+      unit_of_measurement: 'uren'
+
+    vacuum_filter_left:
+      value_template: "{{ state_attr('vacuum.portia', 'filter_left') }}"
+      unit_of_measurement: 'uren'
+    
+    vacuum_sensor_dirty_left:
+      value_template: "{{ state_attr('vacuum.portia', 'sensor_dirty_left') }}"
+      unit_of_measurement: 'uren'
+
+    vacuum_mop_attached:
+      value_template: "{{ state_attr('vacuum.portia', 'mop_attached') }}"
+
 - platform: command_line
   name: command_photosbackup
   command: !secret command_photosbackup
