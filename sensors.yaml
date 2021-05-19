@@ -118,3 +118,8 @@
 - platform: command_line
   name: command_mailbackup
   command: !secret command_mailbackup
+
+- platform: dsmr
+  port: !secret dsmr_port
+  host: !secret dsmr_host
+  dsmr_version: 5B
