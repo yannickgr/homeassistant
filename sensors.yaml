@@ -111,6 +111,14 @@
     vacuum_mop_attached:
       value_template: "{{ state_attr('vacuum.portia', 'mop_attached') }}"
 
+    daily_energy:
+      unit_of_measurement: kWh
+      value_template: "{{ states('sensor.daily_energy_offpeak')|float + states('sensor.daily_energy_peak')|float }}"
+
+    monthly_energy:
+      unit_of_measurement: kWh
+      value_template: "{{ states('sensor.monthly_energy_offpeak')|float + states('sensor.monthly_energy_peak')|float }}"
+
 - platform: command_line
   name: command_photosbackup
   command: !secret command_photosbackup
