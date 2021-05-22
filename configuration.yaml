@@ -16,3 +16,4 @@ timer: !include timers.yaml
 camera: !include cameras.yaml
 webostv: !include webostvs.yaml
 utility_meter: !include utility_meters.yaml
+homekit: !include homekit.yaml

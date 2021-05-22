@@ -1,0 +1,5 @@
+filter:
+  include_entities:
+    - input_boolean.smoke_entry
+    - input_boolean.smoke_stairs
+    - input_boolean.smoke_office
