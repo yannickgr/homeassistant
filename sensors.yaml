@@ -78,14 +78,6 @@
             Bedtime
           {% endif %}
         {% endif %}
-    
-    photos_last_backup:
-      value_template: "{{ strptime(states.sensor.command_photosbackup.state, '%d/%m/%y_%H:%M:%S_%z').strftime('%Y-%m-%dT%H:%M:%S%z') }}"
-      device_class: timestamp
-
-    mail_last_backup:
-      value_template: "{{ strptime(states.sensor.command_mailbackup.state, '%d/%m/%y_%H:%M:%S_%z').strftime('%Y-%m-%dT%H:%M:%S%z') }}"
-      device_class: timestamp
 
     vacuum_battery_level:
       value_template: "{{ state_attr('vacuum.portia', 'battery_level') }}"
