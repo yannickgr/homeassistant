@@ -119,14 +119,6 @@
       unit_of_measurement: kWh
       value_template: "{{ states('sensor.monthly_energy_offpeak')|float + states('sensor.monthly_energy_peak')|float }}"
 
-- platform: command_line
-  name: command_photosbackup
-  command: !secret command_photosbackup
-
-- platform: command_line
-  name: command_mailbackup
-  command: !secret command_mailbackup
-
 - platform: dsmr
   port: !secret dsmr_port
   host: !secret dsmr_host
