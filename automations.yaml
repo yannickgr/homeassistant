@@ -30,15 +30,18 @@
   - platform: state
     entity_id: sensor.day_phase
     to: Away
-    for:
-      minutes: '{{ states(''input_number.heating_auto_off_timeout'')|int }}'
+    for: 0:{{ states('input_number.heating_auto_off_timeout')|int }}:00
   condition:
   - condition: state
     entity_id: input_boolean.heating_auto_off
     state: 'on'
+  - condition: state
+    entity_id: input_boolean.heating_on
+    state: 'on'
   action:
   - service: script.turn_on
     entity_id: script.reset_heating
+  mode: single
 - alias: General / Heating Phase Sleeping
   id: '1600000009142'
   trigger:
@@ -54,6 +57,10 @@
   - platform: state
     entity_id: sensor.day_phase
     to: Waking
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_on
+    state: 'on'
   action:
   - service: script.heating_warm
     data:
@@ -67,12 +74,17 @@
   - service: script.heating_comfort
     data:
       climate: climate.kitchen
+  mode: single
 - alias: General / Heating Phase Working
   id: '1600000000040'
   trigger:
   - platform: state
     entity_id: sensor.day_phase
     to: Working
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_on
+    state: 'on'
   action:
   - service: script.heating_warm
     data:
@@ -89,12 +101,17 @@
   - service: script.heating_standby
     data:
       climate: climate.kitchen
+  mode: single
 - alias: General / Heating Phase Leisure
   id: '1600000000041'
   trigger:
   - platform: state
     entity_id: sensor.day_phase
     to: Leisure
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_on
+    state: 'on'
   action:
   - service: script.heating_warm
     data:
@@ -108,12 +125,17 @@
   - service: script.heating_min
     data:
       climate: climate.office
+  mode: single
 - alias: General / Heating Phase Bedtime
   id: '1600000000042'
   trigger:
   - platform: state
     entity_id: sensor.day_phase
     to: Bedtime
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_on
+    state: 'on'
   action:
   - service: script.heating_warm
     data:
@@ -121,6 +143,7 @@
   - service: script.heating_comfort
     data:
       climate: climate.bedroom
+  mode: single
 - alias: General / Update Notification Badge
   id: '1600000000049'
   trigger:
@@ -203,7 +226,7 @@
   condition:
   - condition: state
     entity_id: group.persons_all
-    state: 'not_home'
+    state: not_home
   action:
   - service: script.notify_all_critical
     data:
@@ -230,7 +253,7 @@
   trigger:
   - platform: state
     entity_id: sensor.ups_status_data
-    to: 'OB DISCHRG'
+    to: OB DISCHRG
   condition: []
   action:
   - service: script.notify_all_critical
@@ -1092,11 +1115,12 @@
   id: '1581451984479'
   trigger:
     platform: template
-    value_template: '{{ states.sensor.time.state == strptime(states.input_datetime.vacuum_autoclean.state, ''%H:%M:%S'').strftime(''%H:%M'') }}'
+    value_template: '{{ states.sensor.time.state == strptime(states.input_datetime.vacuum_autoclean.state,
+      ''%H:%M:%S'').strftime(''%H:%M'') }}'
   condition:
   - condition: state
     entity_id: sensor.day_phase
-    state: 'Working'
+    state: Working
   - condition: state
     entity_id: input_boolean.vacuum_autoclean
     state: 'on'
@@ -1116,4 +1140,19 @@
       title: Wasmachine
       message: 🧺 De wasmachine is klaar
       category: INFO
+  mode: single
+- alias: Bedroom / Fan
+  id: '1622668904367'
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:00
+  condition:
+  - condition: state
+    entity_id: switch.bedroom_fan
+    state: 'on'
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.bedroom_fan
   mode: single
