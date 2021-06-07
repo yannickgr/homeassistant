@@ -1,4 +1,5 @@
 default_config:
+http: !include http.yaml
 frontend: !include frontend.yaml
 recorder: !include recorder.yaml
 automation: !include automations.yaml
