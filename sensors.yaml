@@ -125,8 +125,3 @@
     monthly_energy:
       unit_of_measurement: kWh
       value_template: "{{ states('sensor.monthly_energy_offpeak')|float + states('sensor.monthly_energy_peak')|float }}"
-
-- platform: dsmr
-  port: !secret dsmr_port
-  host: !secret dsmr_host
-  dsmr_version: 5B
